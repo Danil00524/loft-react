@@ -1,0 +1,141 @@
+{
+    "parserOptions": {
+        "parser": "babel-eslint",
+        "sourceType": "module",
+        "ecmaVersion": 7
+    },
+    "env": {
+        "node": true,
+        "browser": true,
+        "mocha": true,
+        "es6": true
+    },
+    "extends": [
+        "airbnb-base",
+        "plugin:vue/recommended"
+    ],
+    "rules": {
+        "no-param-reassign": 0,
+        "func-names": 0,
+        "no-unused-expressions": 0,
+        "object-shorthand": 0,
+        "linebreak-style": 0,
+        "no-restricted-syntax": 0,
+        "no-plusplus": 0,
+        "vue/max-attributes-per-line": [
+            2,
+            {
+                "singleline": 3,
+                "multiline": {
+                    "max": 1,
+                    "allowFirstLine": true
+                }
+            }
+        ],
+        "vue/html-self-closing": [
+            "error",
+            {
+                "html": {
+                    "void": "always",
+                    "normal": "never",
+                    "component": "any"
+                }
+            }
+        ],
+        "no-cond-assign": "off",
+        "space-before-blocks": "error",
+        "spaced-comment": "error",
+        "curly": "error",
+        "guard-for-in": 0,
+        "no-caller": "error",
+        "no-else-return": 0,
+        "no-empty-function": "error",
+        "no-new-wrappers": "error",
+        "no-with": "error",
+        "block-spacing": "error",
+        "brace-style": [
+            "error",
+            "1tbs"
+        ],
+        "indent": [
+            "error",
+            2,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "max-len": [
+            "error",
+            120,
+            {
+                "ignoreComments": true
+            }
+        ],
+        "newline-after-var": "error",
+        "newline-before-return": "error",
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 2,
+                "maxEOF": 1
+            }
+        ],
+        "no-nested-ternary": 0,
+        "no-tabs": "error",
+        "one-var-declaration-per-line": "error",
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "max-statements-per-line": [
+            "error",
+            {
+                "max": 2
+            }
+        ],
+        "keyword-spacing": [
+            "error",
+            {
+                "after": true
+            }
+        ],
+        "key-spacing": [
+            "error",
+            {
+                "afterColon": true
+            }
+        ],
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "dot-notation": "error",
+        "no-eval": "error",
+        "no-multi-spaces": "error",
+        "yoda": "error",
+        "camelcase": [
+            "error",
+            {
+                "properties": "never"
+            }
+        ],
+        "comma-spacing": [
+            "error",
+            {
+                "after": true
+            }
+        ],
+        "consistent-this": [
+            "error",
+            "that"
+        ],
+        "lines-around-directive": [
+            "error",
+            "always"
+        ],
+        "max-nested-callbacks": [
+            "error",
+            4
+        ]
+    }
+}
