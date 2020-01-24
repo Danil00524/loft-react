@@ -1,21 +1,43 @@
 import React from 'react';
+import '../scss/Login.scss';
+import logo from "../img/logo1.png"
 
 const Login = ({ setPage }) => {
-    const goToPage = e => {
+    const goToPageMap = e => {
         e.preventDefault();
 
         setPage('map')
     }
+    const goToPageReg = e => {
+        e.preventDefault();
+
+        setPage('registration')
+    }
 
     return (
-        <>
-            <h1>Login</h1>
-            <form onSubmit={goToPage}>
-                <input placeholder='Введите имя' required />
-                <input placeholder='Введите пароль' required />
-                <input type="submit" value='Submit' />
-            </form>
-        </>
+        <section className='login'>
+            <div className='container login-wrapper'>
+                <img className='logo' src={logo}></img>
+                <div className="form">
+                    <h1>Войти</h1>
+                    <span>Новый пользоватей?</span>
+                    <a onClick={goToPageReg}>Зарегистрируйтесь</a>
+                    <form onSubmit={goToPageMap}>
+                        <label>Имя пользователя*
+                        <input required />
+                        </label>
+                        <label>Пароль*
+                        <input required />
+                        </label>
+                        <div>
+                        <input className='btn' type="submit" value='Войти' />
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </section>
     );
 }
 

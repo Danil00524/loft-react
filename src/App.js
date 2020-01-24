@@ -5,6 +5,7 @@ import Profile from './views/Profile';
 import Map from './views/Map';
 import Login from './views/Login';
 import Registration from './views/Registration';
+import './App.scss';
 
 const PAGES = {
   profile: () => <Profile />,
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header setPage={setPage} />
+      {/* <Header setPage={setPage} /> */}
       {PAGES[page](setPage)}
     </div>
   );
