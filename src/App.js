@@ -1,24 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import Header from './components/Header';
+import Profile from './views/Profile';
+import Map from './views/Map';
+import Login from './views/Login';
+import Registration from './views/Registration';
+
+const PAGES = {
+  profile: () => <Profile />,
+  map: () => <Map />,
+  registration: setPage => <Registration setPage={setPage} />,
+  login: setPage => <Login setPage={setPage} />,
+}
 
 function App() {
+  const [page, setPage] = React.useState("login");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header setPage={setPage} />
+      {PAGES[page](setPage)}
     </div>
   );
 }
