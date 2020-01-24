@@ -1,8 +1,13 @@
 import React from 'react';
+import Header from '../components/Header';
 
-const Maps = () => {
+const Maps = ({ setPage }) => {
     return (
-        <h1>Maps</h1>
+        <section className='map'>
+            <Header setPage={setPage} />
+            <div className='container'>
+            </div>
+        </section>
     );
 }
 

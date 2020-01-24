@@ -1,6 +1,7 @@
 import React from 'react';
+import logo from '../img/logo2.png'
 
-const Header = ({setPage}) => {
+const Header = ({ setPage }) => {
     const goToPage = (e) => {
         e.preventDefault();
 
@@ -11,10 +12,12 @@ const Header = ({setPage}) => {
 
     return (
         <header className="App-header">
-            <button name='profile' onClick={goToPage}>Профиль</button>
-            <button name='map' onClick={goToPage}>Карта</button>
-            <button name='login' onClick={goToPage}>Логин</button>
-            <button name='registration' onClick={goToPage}>Регистрация</button>
+            <img src={logo} />
+            <div className='header'>
+                <button name='map' onClick={goToPage}>Карта</button>
+                <button name='profile' onClick={goToPage}>Профиль</button>
+                <button name='login' onClick={goToPage}>Войти</button>
+            </div>
         </header>
     );
 }
