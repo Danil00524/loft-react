@@ -21,11 +21,11 @@ const Registration = ({ setPage }) => {
     return (
         <section className='login'>
             <div className='container login-wrapper'>
-                <img className='logo' src={logo}></img>
+                <img className='logo' src={logo} alt=""></img>
                 <div className="form">
                     <h1>Регистрация</h1>
                     <span>Уже зарегистрирован?</span>
-                    <a onClick={goToPageLog}>Войти</a>
+                    <a href onClick={goToPageLog}>Войти</a>
                     <form onSubmit={goToPageMap}>
                         <label>Адрес электронной почты
                         <input required />

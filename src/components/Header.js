@@ -5,7 +5,7 @@ import logo from '../img/logo2.png'
 
 const Header = ({ setPage }) => {
     const { isLoginIn, login } = useContext(Login);
-    
+
     const goToPage = (e) => {
         e.preventDefault();
 
@@ -24,7 +24,7 @@ const Header = ({ setPage }) => {
 
     return (
         <header className="App-header" >
-            <img src={logo} />
+            <img src={logo} alt=""/>
             <div className='header'>
                 <button name='map' onClick={goToPage}>Карта</button>
                 <button name='profile' onClick={goToPage}>Профиль</button>

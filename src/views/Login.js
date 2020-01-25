@@ -21,11 +21,11 @@ const Login = ({ setPage }) => {
     return (
         <section className='login'>
             <div className='container login-wrapper'>
-                <img className='logo' src={logo}></img>
+                <img className='logo' src={logo} alt=""></img>
                 <div className="form">
                     <h1>Войти</h1>
                     <span>Новый пользоватей?</span>
-                    <a onClick={goToPageReg}>Зарегистрируйтесь</a>
+                    <a href='#' onClick={goToPageReg}>Зарегистрируйтесь</a>
                     <form onSubmit={goToPageMap}>
                         <label>Имя пользователя*
                         <input required />

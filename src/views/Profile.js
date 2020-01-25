@@ -16,7 +16,7 @@ const Profile = ({ setPage }) => {
             <h4>Способ оплаты</h4>
             <div className='profile-inner'>
                 <div className='card-title'>
-                    <img src={card}></img>
+                    <img src={card} alt=""></img>
                     <label>Номер карты:
                     <input className='number-card'></input>
                     </label>
