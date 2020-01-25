@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Profile from './views/Profile';
 import Map from './views/Map';
 import Login from './views/Login';
 import Registration from './views/Registration';
 import './App.scss';
+
+import LoginContext from './context/Login';
+
 
 const PAGES = {
   profile: setPage => <Profile setPage={setPage} />,
@@ -13,13 +16,18 @@ const PAGES = {
   login: setPage => <Login setPage={setPage} />,
 }
 
+
 function App() {
-  const [page, setPage] = React.useState("login");
+  const [page, setPage] = useState("map");
+  const [isLoginIn, login] = useState(false);
 
   return (
-    <div className="App">
-      {PAGES[page](setPage)}
-    </div>
+    <LoginContext.Provider value={{ isLoginIn, login }}>
+      <div className="App">
+        {PAGES[page](setPage)}
+      </div>
+    </LoginContext.Provider>
+
   );
 }
 

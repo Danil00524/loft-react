@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import LoginContext from '../context/Login';
 
 import '../scss/Map.scss';
 
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
 const Maps = ({ setPage }) => {
+    const { isLoginIn } = useContext(LoginContext);
     let mapContainer = React.createRef();
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWwwMDUyNCIsImEiOiJjazV0amd0NXYwNjA5M2VvYTE1ZmU4dThyIn0.Zn65a2N1HP929vgwZeimNQ';
@@ -31,5 +33,9 @@ const Maps = ({ setPage }) => {
 Maps.propTypes = {
     setPage: PropTypes.func,
 }
+
+Maps.contextTypes = {
+    isLoginIn: PropTypes.bool,
+};
 
 export default Maps;

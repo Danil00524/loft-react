@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import LoginContext from '../context/Login';
 import logo from '../img/logo2.png'
 
 const Registration = ({ setPage }) => {
+    const { login } = useContext(LoginContext);
+
     const goToPageMap = (e) => {
         e.preventDefault();
+        login(true);
 
-        setPage('map')
+        setPage('map');
     }
 
     const goToPageLog = e => {
         e.preventDefault();
 
-        setPage('login')
+        setPage('login');
     }
     return (
         <section className='login'>
@@ -56,5 +60,8 @@ Registration.propTypes = {
     setPage: PropTypes.func,
 }
 
+Registration.contextTypes = {
+    login: PropTypes.func,
+};
 
 export default Registration;

@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import LoginContext from '../context/Login';
 import '../scss/Login.scss';
 import logo from "../img/logo1.png"
 
 const Login = ({ setPage }) => {
+    const { login } = useContext(LoginContext);
     const goToPageMap = e => {
         e.preventDefault();
 
+        login(true);
         setPage('map')
     }
     const goToPageReg = e => {
@@ -31,7 +34,7 @@ const Login = ({ setPage }) => {
                         <input required />
                         </label>
                         <div>
-                        <input className='btn' type="submit" value='Войти' />
+                            <input className='btn' type="submit" value='Войти' />
                         </div>
                     </form>
                 </div>
@@ -45,5 +48,9 @@ const Login = ({ setPage }) => {
 Login.propTypes = {
     setPage: PropTypes.func,
 }
+
+Login.contextTypes = {
+    login: PropTypes.func,
+};
 
 export default Login;
