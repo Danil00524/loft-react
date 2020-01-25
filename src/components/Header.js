@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import logo from '../img/logo2.png'
 
 const Header = ({ setPage }) => {
@@ -20,6 +21,11 @@ const Header = ({ setPage }) => {
             </div>
         </header>
     );
+}
+
+
+Header.propTypes = {
+    setPage: PropTypes.func,
 }
 
 export default Header;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import logo from '../img/logo2.png'
 
 const Registration = ({ setPage }) => {
@@ -50,5 +51,10 @@ const Registration = ({ setPage }) => {
 
     );
 }
+
+Registration.propTypes = {
+    setPage: PropTypes.func,
+}
+
 
 export default Registration;

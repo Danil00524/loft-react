@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import '../scss/Login.scss';
 import logo from "../img/logo1.png"
 
@@ -39,6 +40,10 @@ const Login = ({ setPage }) => {
 
         </section>
     );
+}
+
+Login.propTypes = {
+    setPage: PropTypes.func,
 }
 
 export default Login;

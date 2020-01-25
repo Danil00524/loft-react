@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
+
 import '../scss/Map.scss';
 
+const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
 const Maps = ({ setPage }) => {
-    var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
     let mapContainer = React.createRef();
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWwwMDUyNCIsImEiOiJjazV0amd0NXYwNjA5M2VvYTE1ZmU4dThyIn0.Zn65a2N1HP929vgwZeimNQ';
@@ -24,6 +26,10 @@ const Maps = ({ setPage }) => {
             <div id="map" ref={el => mapContainer = el}></div>
         </section>
     );
+}
+
+Maps.propTypes = {
+    setPage: PropTypes.func,
 }
 
 export default Maps;
