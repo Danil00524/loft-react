@@ -25,7 +25,7 @@ const Login = ({ setPage }) => {
                 <div className="form">
                     <h1>Войти</h1>
                     <span>Новый пользоватей?</span>
-                    <a href='#' onClick={goToPageReg}>Зарегистрируйтесь</a>
+                    <a id='linkToReg' href='#' onClick={goToPageReg}>Зарегистрируйтесь</a>
                     <form onSubmit={goToPageMap}>
                         <label>Имя пользователя*
                         <input required />
