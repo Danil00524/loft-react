@@ -1,22 +1,56 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import LoginContext from '../context/Login';
+import '../scss/Login.scss';
+import logo from "../img/logo1.png"
 
 const Login = ({ setPage }) => {
-    const goToPage = e => {
+    const { login } = useContext(LoginContext);
+    const goToPageMap = e => {
         e.preventDefault();
 
+        login(true);
         setPage('map')
+    }
+    const goToPageReg = e => {
+        e.preventDefault();
+
+        setPage('registration')
     }
 
     return (
-        <>
-            <h1>Login</h1>
-            <form onSubmit={goToPage}>
-                <input placeholder='Введите имя' required />
-                <input placeholder='Введите пароль' required />
-                <input type="submit" value='Submit' />
-            </form>
-        </>
+        <section className='login'>
+            <div className='container login-wrapper'>
+                <img className='logo' src={logo} alt=""></img>
+                <div className="form">
+                    <h1>Войти</h1>
+                    <span>Новый пользоватей?</span>
+                    <a id='linkToReg' href='#' onClick={goToPageReg}>Зарегистрируйтесь</a>
+                    <form onSubmit={goToPageMap}>
+                        <label>Имя пользователя*
+                        <input required />
+                        </label>
+                        <label>Пароль*
+                        <input required />
+                        </label>
+                        <div>
+                            <input className='btn' type="submit" value='Войти' />
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </section>
     );
 }
+
+Login.propTypes = {
+    setPage: PropTypes.func.isRequired,
+}
+
+Login.contextTypes = {
+    login: PropTypes.func.isRequired,
+};
 
 export default Login;
