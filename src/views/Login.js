@@ -46,11 +46,11 @@ const Login = ({ setPage }) => {
 }
 
 Login.propTypes = {
-    setPage: PropTypes.func,
+    setPage: PropTypes.func.isRequired,
 }
 
 Login.contextTypes = {
-    login: PropTypes.func,
+    login: PropTypes.func.isRequired,
 };
 
 export default Login;

@@ -32,11 +32,11 @@ const Maps = ({ setPage }) => {
 }
 
 Maps.propTypes = {
-    setPage: PropTypes.func,
+    setPage: PropTypes.func.isRequired,
 }
 
 Maps.contextTypes = {
-    isLoginIn: PropTypes.bool,
+    isLoginIn: PropTypes.bool.isRequired,
 };
 
 export default Maps;
