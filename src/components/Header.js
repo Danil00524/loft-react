@@ -6,11 +6,11 @@ import PropTypes from 'prop-types';
 import logo from '../img/logo2.png'
 
 const Header = () => {
-    const { isLoginIn, login } = useContext(Login);
+    const { isLoginIn, setLogin } = useContext(Login);
 
     const logoutUser = (e) => {
         e.preventDefault();
-        login(false)
+        setLogin(false)
     }
 
     const goIn = <Link to='/login'>Войти</Link>;
@@ -30,7 +30,7 @@ const Header = () => {
 
 Header.contextTypes = {
     isLoginIn: PropTypes.bool,
-    login: PropTypes.func,
+    setLogin: PropTypes.func,
 };
 
 export default Header;

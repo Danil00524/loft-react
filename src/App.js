@@ -12,11 +12,11 @@ import LoginContext from './context/Login';
 
 
 const App = () => {
-  const [isLoginIn, login] = useState(false);
+  const [isLoginIn, setLogin] = useState(false);
 
   return (
-    <LoginContext.Provider value={{ isLoginIn, login }}>
-      <div className="App">
+    <div className="App">
+      <LoginContext.Provider value={{ isLoginIn, setLogin }}>
         <Router>
           <Switch>
             <Route path={'/'} component={Map} exact />
@@ -26,8 +26,8 @@ const App = () => {
             <Route component={Page404} />
           </Switch>
         </Router>
-      </div>
-    </LoginContext.Provider>
+      </LoginContext.Provider>
+    </div>
   );
 }
 

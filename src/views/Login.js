@@ -1,19 +1,20 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-
 import PropTypes from 'prop-types';
+
 import LoginContext from '../context/Login';
 import '../scss/Login.scss';
 import logo from "../img/logo1.png"
 
 const Login = ({ history }) => {
-    const { login } = useContext(LoginContext);
+    const { setLogin } = useContext(LoginContext);
 
     const goToPageMap = (e) => {
         e.preventDefault();
 
-        login(true);
-        history.push('/')
+        setLogin(true);
+        console.log(setLogin);
+        history.push('/');
     }
 
     return (
@@ -42,7 +43,7 @@ const Login = ({ history }) => {
 }
 
 Login.contextTypes = {
-    login: PropTypes.func.isRequired,
+    setLogin: PropTypes.func.isRequired,
 };
 
 export default Login;

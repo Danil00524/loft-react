@@ -6,11 +6,11 @@ import LoginContext from '../context/Login';
 import logo from '../img/logo2.png'
 
 const Registration = ({ history }) => {
-    const { login } = useContext(LoginContext);
+    const { setLogin } = useContext(LoginContext);
 
     const goToPageMap = (e) => {
         e.preventDefault();
-        login(true);
+        setLogin(true);
 
         history.push('/')
     }
@@ -54,7 +54,7 @@ const Registration = ({ history }) => {
 }
 
 Registration.contextTypes = {
-    login: PropTypes.func,
+    setLogin: PropTypes.func,
 };
 
 export default Registration;
