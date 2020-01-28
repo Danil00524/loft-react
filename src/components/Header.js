@@ -1,42 +1,31 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+
 import Login from '../context/Login';
 import PropTypes from 'prop-types';
 import logo from '../img/logo2.png'
 
-const Header = ({ setPage }) => {
+const Header = () => {
     const { isLoginIn, login } = useContext(Login);
-
-    const goToPage = (e) => {
-        e.preventDefault();
-
-        const page = e.target.name;
-
-        setPage(page)
-    }
 
     const logoutUser = (e) => {
         e.preventDefault();
         login(false)
     }
 
-    const goIn = <button name='login' onClick={goToPage}>Войти</button>;
-    const goOut = <button name='login' onClick={logoutUser}>Выйти</button>;
+    const goIn = <Link to='/login'>Войти</Link>;
+    const goOut = <Link to='/' onClick={logoutUser}>Выйти</Link>;
 
     return (
         <header className="App-header" >
             <img src={logo} alt=""/>
             <div className='header'>
-                <button name='map' onClick={goToPage}>Карта</button>
-                <button name='profile' onClick={goToPage}>Профиль</button>
+                <Link to='/'>Карта</Link>
+                <Link to='/profile'>Профиль</Link>
                 {isLoginIn ? goOut : goIn}
             </div>
         </header>
     );
-}
-
-
-Header.propTypes = {
-    setPage: PropTypes.func,
 }
 
 Header.contextTypes = {

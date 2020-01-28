@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import '../scss/Profile.scss'
 import card from '../img/card.png'
 
-const Profile = ({ setPage }) => {
+const Profile = () => {
     const { isLoginIn } = useContext(LoginContext);
 
     const unAuthorized = <h1>Войдите в аккаунт для просмотра данной страницы.</h1>;
@@ -41,15 +41,11 @@ const Profile = ({ setPage }) => {
 
     return (
         <section>
-            <Header setPage={setPage} />
+            <Header />
             {isLoginIn ? profile : unAuthorized}
         </section>
 
     );
-}
-
-Profile.propTypes = {
-    setPage: PropTypes.func,
 }
 
 Profile.contextTypes = {

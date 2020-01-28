@@ -1,33 +1,33 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Profile from './views/Profile';
 import Map from './views/Map';
 import Login from './views/Login';
 import Registration from './views/Registration';
+import Page404 from './views/Page404';
 import './App.scss';
 
 import LoginContext from './context/Login';
 
 
-const PAGES = {
-  profile: setPage => <Profile setPage={setPage} />,
-  map: setPage => <Map setPage={setPage} />,
-  registration: setPage => <Registration setPage={setPage} />,
-  login: setPage => <Login setPage={setPage} />,
-}
-
-
-function App() {
-  const [page, setPage] = useState("map");
+const App = () => {
   const [isLoginIn, login] = useState(false);
 
   return (
     <LoginContext.Provider value={{ isLoginIn, login }}>
       <div className="App">
-        {PAGES[page](setPage)}
+        <Router>
+          <Switch>
+            <Route path={'/'} component={Map} exact />
+            <Route path={'/login'} component={Login} />
+            <Route path={'/registration'} component={Registration} />
+            <Route path={'/profile'} component={Profile} />
+            <Route component={Page404} />
+          </Switch>
+        </Router>
       </div>
     </LoginContext.Provider>
-
   );
 }
 

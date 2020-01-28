@@ -1,21 +1,19 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import LoginContext from '../context/Login';
 import '../scss/Login.scss';
 import logo from "../img/logo1.png"
 
-const Login = ({ setPage }) => {
+const Login = ({ history }) => {
     const { login } = useContext(LoginContext);
-    const goToPageMap = e => {
+
+    const goToPageMap = (e) => {
         e.preventDefault();
 
         login(true);
-        setPage('map')
-    }
-    const goToPageReg = e => {
-        e.preventDefault();
-
-        setPage('registration')
+        history.push('/')
     }
 
     return (
@@ -25,7 +23,7 @@ const Login = ({ setPage }) => {
                 <div className="form">
                     <h1>Войти</h1>
                     <span>Новый пользоватей?</span>
-                    <a id='linkToReg' href='#' onClick={goToPageReg}>Зарегистрируйтесь</a>
+                    <Link to='/registration' id='linkToReg'>Зарегистрируйтесь</Link>
                     <form onSubmit={goToPageMap}>
                         <label>Имя пользователя*
                         <input required />
@@ -38,15 +36,9 @@ const Login = ({ setPage }) => {
                         </div>
                     </form>
                 </div>
-
             </div>
-
         </section>
     );
-}
-
-Login.propTypes = {
-    setPage: PropTypes.func.isRequired,
 }
 
 Login.contextTypes = {

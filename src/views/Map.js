@@ -11,7 +11,7 @@ import { mapbox } from '../constants/tokens';
 
 mapboxgl.accessToken = mapbox;
 
-const Maps = ({ setPage }) => {
+const Maps = () => {
     let mapContainer = React.createRef();
 
     useEffect(() => {
@@ -25,14 +25,10 @@ const Maps = ({ setPage }) => {
 
     return (
         <section className='map'>
-            <Header setPage={setPage} />
+            <Header />
             <div id="map" ref={el => mapContainer = el}></div>
         </section>
     );
-}
-
-Maps.propTypes = {
-    setPage: PropTypes.func.isRequired,
 }
 
 Maps.contextTypes = {
