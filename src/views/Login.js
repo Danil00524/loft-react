@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -9,11 +9,34 @@ import logo from "../img/logo1.png"
 const Login = ({ history }) => {
     const { setLogin } = useContext(LoginContext);
 
-    const goToPageMap = (e) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handlerFormData = () => {
+        const formUser = new FormData();
+
+        formUser.append("email", email);
+        formUser.append("password", password);
+
+        return formUser;
+    }
+
+    const handlerLogin = (e) => {
         e.preventDefault();
 
         setLogin(true);
-        history.push('/');
+        fetch('https://loft-taxi.glitch.me/auth', {
+            method: "POST",
+            headers: {
+                "Content-Type": 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(handlerFormData())
+        })
+            .then((response) => {
+                console.log(response)
+                history.push("/")
+            })
+            .catch((e) => console.error(e));
     }
 
     return (
@@ -24,12 +47,12 @@ const Login = ({ history }) => {
                     <h1>Войти</h1>
                     <span>Новый пользоватей?</span>
                     <Link to='/registration' id='linkToReg'>Зарегистрируйтесь</Link>
-                    <form onSubmit={goToPageMap}>
+                    <form onSubmit={handlerLogin}>
                         <label>Имя пользователя*
-                        <input required />
+                        <input onChange={(e) => setEmail(e.target.value)} required />
                         </label>
                         <label>Пароль*
-                        <input required />
+                        <input onChange={(e) => setPassword(e.target.value)} required />
                         </label>
                         <div>
                             <input className='btn' type="submit" value='Войти' />

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
@@ -8,11 +8,38 @@ import logo from '../img/logo2.png'
 const Registration = ({ history }) => {
     const { setLogin } = useContext(LoginContext);
 
-    const goToPageMap = (e) => {
+    const [name, setName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handlerFormData = () => {
+        const formUser = new FormData();
+
+        formUser.append("email", email);
+        formUser.append("name", name);
+        formUser.append("surname", lastName);
+        formUser.append("password", password);
+
+        return formUser;
+    }
+
+    const handlerRegistration = (e) => {
         e.preventDefault();
         setLogin(true);
 
-        history.push('/')
+        fetch('https://loft-taxi.glitch.me/register', {
+            method: "POST",
+            headers: {
+                "Content-Type": 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(handlerFormData())
+        })
+            .then((response) => {
+                console.log(response)
+                history.push("/")
+            })
+            .catch((e) => console.error(e));
     }
 
     return (
@@ -23,33 +50,30 @@ const Registration = ({ history }) => {
                     <h1>Регистрация</h1>
                     <span>Уже зарегистрирован?</span>
                     <Link to='/login'>Войти</Link>
-                    <form onSubmit={goToPageMap}>
+                    <form onSubmit={handlerRegistration}>
                         <label>Адрес электронной почты
-                        <input required />
+                        <input onChange={(e) => setEmail(e.target.value)} required />
                         </label>
                         <span>
                             <label className='name'>
                                 Имя
-                                <input required></input>
+                                <input onChange={(e) => setName(e.target.value)} required></input>
                             </label>
                             <label className='name'>
                                 Фамилия
-                                <input required></input>
+                                <input onChange={(e) => setLastName(e.target.value)} required></input>
                             </label>
                         </span>
                         <label>Пароль
-                        <input required />
+                        <input onChange={(e) => setPassword(e.target.value)} type='password' required />
                         </label>
                         <div>
                             <input className='btn' type="submit" value='Зарегистрироваться' />
                         </div>
                     </form>
                 </div>
-
             </div>
-
         </section>
-
     );
 }
 
