@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import LoginContext from '../context/Login';
 import Header from '../components/Header';
@@ -9,33 +9,67 @@ import card from '../img/card.png'
 const Profile = () => {
     const { isLoginIn } = useContext(LoginContext);
 
+    const [cardNumber, setCardNumber] = useState('');
+    const [expiryDate, setExpiryDate] = useState('');
+    const [namePerson, setNamePerson] = useState('');
+    const [cvc, setCvc] = useState('');
+
+    const handlerFormData = () => {
+        const formUser = new FormData();
+
+        formUser.append("cardNumber", cardNumber);
+        formUser.append("expiryDate", expiryDate);
+        formUser.append("cardName", namePerson);
+        formUser.append("cvc", cvc);
+
+        return formUser;
+    }
+
+    const handlerAddCard = (e) => {
+        e.preventDefault();
+
+        fetch('https://loft-taxi.glitch.me/card', {
+            method: "POST",
+            headers: {
+                "Content-Type": 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(handlerFormData())
+        })
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((e) => console.error(e));
+    }
+
     const unAuthorized = <h1>Войдите в аккаунт для просмотра данной страницы.</h1>;
     const profile = <div className='profile'>
         <div className='profile-wrapper'>
             <h1>Профиль</h1>
             <h4>Способ оплаты</h4>
-            <div className='profile-inner'>
-                <div className='card-title'>
-                    <img src={card} alt=""></img>
-                    <label>Номер карты:
-                    <input className='number-card'></input>
-                    </label>
-                    <label>Cрок действия:
-                    <input className='date' placeholder='00/00'></input>
-                    </label>
+            <form onSubmit={handlerAddCard}>
+                <div className='profile-inner'>
+                    <div className='card-title'>
+                        <img src={card} alt=""></img>
+                        <label>Номер карты:
+                            <input onChange={(e) => setCardNumber(e.target.value)} className='card-number' type='number'></input>
+                        </label>
+                        <label>Cрок действия:
+                            <input onChange={(e) => setExpiryDate(e.target.value)} className='card-date' type='number' placeholder='00/00'></input>
+                        </label>
+                    </div>
+                    <div className='card-back'>
+                        <label>Имя владельца:
+                            <input onChange={(e) => setNamePerson(e.target.value)} className='card-name' type='text'></input>
+                        </label>
+                        <label>CVC:
+                            <input onChange={(e) => setCvc(e.target.value)} className='card-cvc' type='number'></input>
+                        </label>
+                    </div>
                 </div>
-                <div className='card-back'>
-                    <label>Имя владельца:
-                    <input></input>
-                    </label>
-                    <label>CVC:
-                    <input></input>
-                    </label>
+                <div className='wrapper-btn'>
+                    <button className='btn' type='submit'>Сохранить</button>
                 </div>
-            </div>
-            <div className='wrapper-btn'>
-                <button className='btn'>Сохранить</button>
-            </div>
+            </form>
         </div>
     </div>;
 

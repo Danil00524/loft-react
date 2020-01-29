@@ -44,6 +44,7 @@
             right: 10px;
             top: 10px;
         }
+
         & label {
             padding-top: 37px;
             display: flex;
@@ -53,12 +54,6 @@
             & input {
                 font-size: 24px;
             }
-
-            & .date {
-                width: 70px;
-            }
-
-            & .number-card {}
         }
     }
 
@@ -75,6 +70,7 @@
             display: flex;
             color: #323232;
             flex-direction: column;
+
             & input {
                 font-size: 24px;
             }
@@ -85,5 +81,20 @@
         display: flex;
         justify-content: space-around;
         padding-bottom: 44px;
+
+        & .card-date {}
+
+        & .card-cvc::-webkit-outer-spin-button,
+        & .card-cvc::-webkit-inner-spin-button,
+        & .card-number::-webkit-inner-spin-button,
+        & .card-number::-webkit-outer-spin-button,
+        & .card-date::-webkit-outer-spin-button,
+        & .card-date::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+        & .card-cvc,
+        .card-date {
+            width: 70px;
+        }
     }
 }
