@@ -13,7 +13,6 @@ const Login = ({ history }) => {
         e.preventDefault();
 
         setLogin(true);
-        console.log(setLogin);
         history.push('/');
     }
 
@@ -43,7 +42,7 @@ const Login = ({ history }) => {
 }
 
 Login.contextTypes = {
-    setLogin: PropTypes.func.isRequired,
+    setLogin: PropTypes.func,
 };
 
 export default Login;
