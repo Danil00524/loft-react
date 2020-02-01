@@ -1,14 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
-import LoginContext from '../context/Login';
 import '../scss/Login.scss';
 import logo from "../img/logo1.png"
 
-const Login = ({ history }) => {
-    const { setLogin } = useContext(LoginContext);
-
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -24,19 +20,19 @@ const Login = ({ history }) => {
     const handlerLogin = (e) => {
         e.preventDefault();
 
-        setLogin(true);
-        fetch('https://loft-taxi.glitch.me/auth', {
-            method: "POST",
-            headers: {
-                "Content-Type": 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(handlerFormData())
-        })
-            .then((response) => {
-                console.log(response)
-                history.push("/")
-            })
-            .catch((e) => console.error(e));
+        const form = handlerFormData();
+        // fetch('https://loft-taxi.glitch.me/auth', {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": 'application/json;charset=utf-8'
+        //     },
+        //     body: JSON.stringify(handlerFormData())
+        // })
+        //     .then((response) => {
+        //         console.log(response)
+        //         history.push("/")
+        //     })
+        //     .catch((e) => console.error(e));
     }
 
     return (
@@ -63,9 +59,5 @@ const Login = ({ history }) => {
         </section>
     );
 }
-
-Login.contextTypes = {
-    setLogin: PropTypes.func,
-};
 
 export default Login;

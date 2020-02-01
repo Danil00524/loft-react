@@ -1,14 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import LoginContext from '../context/Login';
 import Header from '../components/Header';
 
 import '../scss/Profile.scss'
 import card from '../img/card.png'
 
 const Profile = () => {
-    const { isLoginIn } = useContext(LoginContext);
-
     const [cardNumber, setCardNumber] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
     const [namePerson, setNamePerson] = useState('');
@@ -51,18 +48,35 @@ const Profile = () => {
                     <div className='card-title'>
                         <img src={card} alt=""></img>
                         <label>Номер карты:
-                            <input onChange={(e) => setCardNumber(e.target.value)} className='card-number' type='number'></input>
+                            <input
+                                onChange={(e) => setCardNumber(e.target.value)}
+                                className='card-number'
+                                type='number'
+                                required />
                         </label>
                         <label>Cрок действия:
-                            <input onChange={(e) => setExpiryDate(e.target.value)} className='card-date' type='number' placeholder='00/00'></input>
+                            <input
+                                onChange={(e) => setExpiryDate(e.target.value)}
+                                className='card-date'
+                                type='number'
+                                placeholder='00/00'
+                                required />
                         </label>
                     </div>
                     <div className='card-back'>
                         <label>Имя владельца:
-                            <input onChange={(e) => setNamePerson(e.target.value)} className='card-name' type='text'></input>
+                            <input
+                                onChange={(e) => setNamePerson(e.target.value)}
+                                className='card-name'
+                                type='text'
+                                required />
                         </label>
                         <label>CVC:
-                            <input onChange={(e) => setCvc(e.target.value)} className='card-cvc' type='number'></input>
+                            <input
+                                onChange={(e) => setCvc(e.target.value)}
+                                className='card-cvc'
+                                type='number'
+                                required />
                         </label>
                     </div>
                 </div>
@@ -76,14 +90,10 @@ const Profile = () => {
     return (
         <section>
             <Header />
-            {isLoginIn ? profile : unAuthorized}
+            {false ? profile : unAuthorized}
         </section>
 
     );
 }
-
-Profile.contextTypes = {
-    isLoginIn: PropTypes.bool,
-};
 
 export default Profile;

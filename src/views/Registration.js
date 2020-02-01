@@ -1,13 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
-import LoginContext from '../context/Login';
 import logo from '../img/logo2.png'
 
-const Registration = ({ history }) => {
-    const { setLogin } = useContext(LoginContext);
-
+const Registration = () => {
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -26,7 +22,6 @@ const Registration = ({ history }) => {
 
     const handlerRegistration = (e) => {
         e.preventDefault();
-        setLogin(true);
 
         fetch('https://loft-taxi.glitch.me/register', {
             method: "POST",
@@ -37,7 +32,6 @@ const Registration = ({ history }) => {
         })
             .then((response) => {
                 console.log(response)
-                history.push("/")
             })
             .catch((e) => console.error(e));
     }
@@ -76,9 +70,5 @@ const Registration = ({ history }) => {
         </section>
     );
 }
-
-Registration.contextTypes = {
-    setLogin: PropTypes.func,
-};
 
 export default Registration;
