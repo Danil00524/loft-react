@@ -8,22 +8,26 @@ import Login from './views/Login';
 import Registration from './views/Registration';
 import Page404 from './views/Page404';
 import PrivateRoute from "./HOCs/PrivateRoute";
+import Preloader from './components/Preloader';
 
 import './App.scss';
 
 const App = () => {
-  const { isLogin, token } = useSelector(state => state.auth)
+  const { isLogin, token, isLoading } = useSelector(state => state.auth);
+  const { isLoadingCard } = useSelector(state => state.bankCard);
   const history = useHistory();
 
   useEffect(() => {
     if (isLogin) {
       history.push('/');
-      localStorage.loftTaxi = JSON.stringify({ token })
+      localStorage.loftTaxi = JSON.stringify({ token });
     }
   }, [isLogin])
 
+  if (isLoading || isLoadingCard) return <Preloader/>;
+
   return (
-    <div className="App">
+    <div data-testid='app' className="App">
       <Switch>
         <Route path={'/'} component={Map} exact />
         <Route path={'/login'} component={Login} />

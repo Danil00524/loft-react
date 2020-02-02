@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchLoginRequest } from '../redux/modules/auth/actions'
 
@@ -11,7 +11,6 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
-    const isLoading = useSelector(state => state.auth.isLoading);
 
     const handlerLogin = (e) => {
         e.preventDefault();
@@ -37,7 +36,6 @@ const Login = () => {
                         <div>
                             <input className='btn' type="submit" value='Войти' />
                         </div>
-                        {isLoading ? <div>Подождите, идет загрузка...</div> : null}
                     </form>
                 </div>
             </div>
