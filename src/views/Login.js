@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchLoginRequest } from '../redux/modules/auth/actions'
 
 import '../scss/Login.scss';
 import logo from "../img/logo1.png"
 
-const Login = () => {
+const Login = ({ history }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
     const handlerFormData = () => {
         const formUser = new FormData();
@@ -17,22 +20,12 @@ const Login = () => {
         return formUser;
     }
 
-    const handlerLogin = (e) => {
+    const handlerLogin = async (e) => {
         e.preventDefault();
-
         const form = handlerFormData();
-        // fetch('https://loft-taxi.glitch.me/auth', {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": 'application/json;charset=utf-8'
-        //     },
-        //     body: JSON.stringify(handlerFormData())
-        // })
-        //     .then((response) => {
-        //         console.log(response)
-        //         history.push("/")
-        //     })
-        //     .catch((e) => console.error(e));
+
+        await dispatch(fetchLoginRequest(form))
+        history.push('/');
     }
 
     return (

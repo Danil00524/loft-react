@@ -1,6 +1,10 @@
-import { fetchLoginRequest, fetchLoginSuccess, fetchLoginFailure, fetchLogoutRequest } from './actions';
+import {
+    fetchLoginRequest, fetchLoginSuccess, fetchLoginFailure, fetchRegisterRequest
+    , fetchRegisterFailure, fetchRegisterSuccess
+} from './actions';
 
-const handlerRequest = (url, method, actionSuccess, payload, store) => {
+const handlerRequest = (url, method, actionSuccess, actionFailure, payload, store) => {
+    console.log(payload)
     fetch(url, {
         method: method,
         headers: {
@@ -18,7 +22,8 @@ const handlerRequest = (url, method, actionSuccess, payload, store) => {
                 throw data;
             }
         })
-        .catch((e) => store.dispatch(fetchLoginFailure(e)));
+        .catch((e) => store.dispatch(actionFailure(e)));
+
 }
 
 export const authMiddleware = store => next => action => {
@@ -28,9 +33,8 @@ export const authMiddleware = store => next => action => {
     // И так же имеет ссылку на следующий Middleware, который нужно не забывать вызывать в методе "next" в конце.
 
     if (action.type === fetchLoginRequest.toString()) {
-        handlerRequest('https://loft-taxi.glitch.me/auth', "POST", fetchLoginSuccess, action.payload, store);
-    } else if (action.type === fetchLogoutRequest.toString()) {
-        handlerRequest('https://loft-taxi.glitch.me/auth', "POST", fetchLogoutRequest, action.payload, store);
+        handlerRequest('https://loft-taxi.glitch.me/auth', "POST", fetchLoginSuccess, fetchLoginFailure,
+        action.payload, store);
     }
 
     next(action);
@@ -43,4 +47,12 @@ export const authMiddleware = store => next => action => {
     // console.log(store.getState()) // store после вызова
 
     // return result;
+}
+
+export const registerMiddleware = store => next => action => {
+    if (action.type === fetchRegisterRequest.toString()) {
+        handlerRequest('https://loft-taxi.glitch.me/register', "POST", fetchRegisterSuccess, fetchRegisterFailure,  action.payload, store);
+    };
+
+    next(action);
 }

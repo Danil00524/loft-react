@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchRegisterRequest } from '../redux/modules/auth/actions';
 
 import logo from '../img/logo2.png'
 
-const Registration = () => {
+const Registration = ({ history }) => {
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
     const handlerFormData = () => {
         const formUser = new FormData();
@@ -20,20 +23,12 @@ const Registration = () => {
         return formUser;
     }
 
-    const handlerRegistration = (e) => {
+    const handlerRegistration = async (e) => {
         e.preventDefault();
-
-        fetch('https://loft-taxi.glitch.me/register', {
-            method: "POST",
-            headers: {
-                "Content-Type": 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(handlerFormData())
-        })
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((e) => console.error(e));
+        const form = handlerFormData();
+        
+        await dispatch(fetchRegisterRequest(form))
+        history.push('/');
     }
 
     return (
