@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
+import { useSelector } from 'react-redux';
 
 import '../scss/Profile.scss'
 import card from '../img/card.png'
@@ -9,6 +10,7 @@ const Profile = () => {
     const [expiryDate, setExpiryDate] = useState('');
     const [namePerson, setNamePerson] = useState('');
     const [cvc, setCvc] = useState('');
+    const isLogin = useSelector(state => state.auth.isLogin);
 
     const handlerFormData = () => {
         const formUser = new FormData();
@@ -89,7 +91,7 @@ const Profile = () => {
     return (
         <section>
             <Header />
-            {false ? profile : unAuthorized}
+            {isLogin ? profile : unAuthorized}
         </section>
 
     );

@@ -1,21 +1,20 @@
 import {
-    fetchLoginRequest, fetchLoginSuccess, fetchLoginFailure, fetchRegisterRequest
-    , fetchRegisterFailure, fetchRegisterSuccess
+    fetchLoginRequest, fetchLoginSuccess, fetchLoginFailure, fetchRegisterRequest,
+    fetchRegisterFailure, fetchRegisterSuccess
 } from './actions';
 
-const handlerRequest = (url, method, actionSuccess, actionFailure, payload, store) => {
-    console.log(payload)
-    fetch(url, {
-        method: method,
+const handlerRequest = (url, methods, actionSuccess, actionFailure, payload, store) => {
+    fetch(`${url}`, {
+        method: methods,
         headers: {
-            "Content-Type": 'application/json;charset=utf-8'
+            "Content-Type": 'application/json'
         },
         body: JSON.stringify(payload)
     })
-        .then((response) => {
-            response.json();
+        .then(response => {
+            return response.json();
         })
-        .then((data) => {
+        .then(data => {
             if (data.success) {
                 store.dispatch(actionSuccess(data));
             } else {
@@ -23,7 +22,6 @@ const handlerRequest = (url, method, actionSuccess, actionFailure, payload, stor
             }
         })
         .catch((e) => store.dispatch(actionFailure(e)));
-
 }
 
 export const authMiddleware = store => next => action => {
@@ -34,10 +32,12 @@ export const authMiddleware = store => next => action => {
 
     if (action.type === fetchLoginRequest.toString()) {
         handlerRequest('https://loft-taxi.glitch.me/auth', "POST", fetchLoginSuccess, fetchLoginFailure,
-        action.payload, store);
-    }
+            action.payload, store);
+    } else if (action.type === fetchRegisterRequest.toString()) {
+        handlerRequest('https://loft-taxi.glitch.me/register', "POST", fetchRegisterSuccess, fetchRegisterFailure, action.payload, store);
+    };
 
-    next(action);
+    return next(action);
 
     //              ------- EXAMPLE --------
     // console.log(store.getState()) // store до вызова
@@ -51,7 +51,7 @@ export const authMiddleware = store => next => action => {
 
 export const registerMiddleware = store => next => action => {
     if (action.type === fetchRegisterRequest.toString()) {
-        handlerRequest('https://loft-taxi.glitch.me/register', "POST", fetchRegisterSuccess, fetchRegisterFailure,  action.payload, store);
+        handlerRequest('https://loft-taxi.glitch.me/register', "POST", fetchRegisterSuccess, fetchRegisterFailure, action.payload, store);
     };
 
     next(action);

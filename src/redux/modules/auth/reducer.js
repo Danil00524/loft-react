@@ -1,4 +1,6 @@
 import {
+    fetchLoginRequest,
+    fetchRegisterRequest,
     fetchLoginSuccess,
     fetchLoginFailure,
     fetchRegisterFailure,
@@ -15,11 +17,13 @@ const isLogin = handleActions({
     [logoutAction]: () => false,
     [fetchRegisterFailure]: () => false,
     [fetchRegisterSuccess]: () => true,
-}, false);
+}, localStorage.loftTaxi ? true : false);
 
 const isLoading = handleActions({
+    [fetchRegisterRequest]: () => true,
     [fetchRegisterFailure]: () => false,
     [fetchRegisterSuccess]: () => false,
+    [fetchLoginRequest]: () => true,
     [fetchLoginSuccess]: () => false,
     [fetchLoginFailure]: () => false,
 }, false);

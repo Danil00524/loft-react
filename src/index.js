@@ -5,12 +5,15 @@ import * as serviceWorker from './serviceWorker';
 
 import { createAppStore } from './redux/store';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 let store = createAppStore();
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <Router>
+            <App />
+        </Router>
     </Provider>,
     document.getElementById('root')
 );

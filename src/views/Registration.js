@@ -1,34 +1,34 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { fetchRegisterRequest } from '../redux/modules/auth/actions';
 
 import logo from '../img/logo2.png'
 
-const Registration = ({ history }) => {
+const Registration = () => {
     const [name, setName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [surname, setSurname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const isLoading = useSelector(state => state.auth.isLoading);
 
-    const handlerFormData = () => {
-        const formUser = new FormData();
+    // const handlerFormData = () => {
+    //     const formUser = new FormData();
 
-        formUser.append("email", email);
-        formUser.append("name", name);
-        formUser.append("surname", lastName);
-        formUser.append("password", password);
+    //     formUser.append("email", email);
+    //     formUser.append("name", name);
+    //     formUser.append("surname", lastName);
+    //     formUser.append("password", password);
 
-        return formUser;
-    }
+    //     return formUser;
+    // }
 
-    const handlerRegistration = async (e) => {
+    const handlerRegistration = (e) => {
         e.preventDefault();
-        const form = handlerFormData();
-        
-        await dispatch(fetchRegisterRequest(form))
-        history.push('/');
+        // const form = handlerFormData();
+
+        dispatch(fetchRegisterRequest({name, surname, email, password}))
     }
 
     return (
@@ -50,7 +50,7 @@ const Registration = ({ history }) => {
                             </label>
                             <label className='name'>
                                 Фамилия
-                                <input onChange={(e) => setLastName(e.target.value)} required></input>
+                                <input onChange={(e) => setSurname(e.target.value)} required></input>
                             </label>
                         </span>
                         <label>Пароль
@@ -59,6 +59,7 @@ const Registration = ({ history }) => {
                         <div>
                             <input className='btn' type="submit" value='Зарегистрироваться' />
                         </div>
+                        {isLoading ? <div>Подождите, идет загрузка...</div> : null}
                     </form>
                 </div>
             </div>

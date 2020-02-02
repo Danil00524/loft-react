@@ -1,31 +1,31 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchLoginRequest } from '../redux/modules/auth/actions'
 
 import '../scss/Login.scss';
 import logo from "../img/logo1.png"
 
-const Login = ({ history }) => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const isLoading = useSelector(state => state.auth.isLoading);
 
-    const handlerFormData = () => {
-        const formUser = new FormData();
+    // const handlerFormData = () => {
+    //     const formUser = new FormData();
 
-        formUser.append("email", email);
-        formUser.append("password", password);
+    //     formUser.append("email", email);
+    //     formUser.append("password", password);
 
-        return formUser;
-    }
+    //     return formUser;
+    // }
 
-    const handlerLogin = async (e) => {
+    const handlerLogin = (e) => {
         e.preventDefault();
-        const form = handlerFormData();
+        // const form = handlerFormData();
 
-        await dispatch(fetchLoginRequest(form))
-        history.push('/');
+        dispatch(fetchLoginRequest({email, password}))
     }
 
     return (
@@ -41,11 +41,12 @@ const Login = ({ history }) => {
                         <input onChange={(e) => setEmail(e.target.value)} required />
                         </label>
                         <label>Пароль*
-                        <input onChange={(e) => setPassword(e.target.value)} required />
+                        <input type='password' onChange={(e) => setPassword(e.target.value)} required />
                         </label>
                         <div>
                             <input className='btn' type="submit" value='Войти' />
                         </div>
+                        {isLoading ? <div>Подождите, идет загрузка...</div> : null}
                     </form>
                 </div>
             </div>
