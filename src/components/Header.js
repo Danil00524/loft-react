@@ -13,18 +13,23 @@ const Header = () => {
         e.preventDefault();
 
         dispatch(logoutAction());
+        localStorage.loftTaxi = '';
     }
 
-    const goIn = <Link to='/login'>Войти</Link>;
-    const goOut = <Link to='/' onClick={logoutUser}>Выйти</Link>;
+    const renderAuthLink = () => {
+        const goIn = <Link to='/login'>Войти</Link>;
+        const goOut = <Link to='/' onClick={logoutUser}>Выйти</Link>;
+
+        return isLogin ? goOut : goIn
+    }
 
     return (
         <header className="App-header" >
-            <img src={logo} alt=""/>
+            <img src={logo} alt="" />
             <div className='header'>
                 <Link to='/'>Карта</Link>
                 <Link to='/profile'>Профиль</Link>
-                {isLogin ? goOut : goIn}
+                {renderAuthLink()}
             </div>
         </header>
     );

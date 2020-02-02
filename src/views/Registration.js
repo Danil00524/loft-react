@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchRegisterRequest } from '../redux/modules/auth/actions';
 
 import logo from '../img/logo2.png'
@@ -13,22 +13,10 @@ const Registration = () => {
     const dispatch = useDispatch();
     const isLoading = useSelector(state => state.auth.isLoading);
 
-    // const handlerFormData = () => {
-    //     const formUser = new FormData();
-
-    //     formUser.append("email", email);
-    //     formUser.append("name", name);
-    //     formUser.append("surname", lastName);
-    //     formUser.append("password", password);
-
-    //     return formUser;
-    // }
-
     const handlerRegistration = (e) => {
         e.preventDefault();
-        // const form = handlerFormData();
 
-        dispatch(fetchRegisterRequest({name, surname, email, password}))
+        dispatch(fetchRegisterRequest({ name, surname, email, password }))
     }
 
     return (

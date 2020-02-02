@@ -9,21 +9,12 @@ import logo from "../img/logo1.png"
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const dispatch = useDispatch();
     const isLoading = useSelector(state => state.auth.isLoading);
 
-    // const handlerFormData = () => {
-    //     const formUser = new FormData();
-
-    //     formUser.append("email", email);
-    //     formUser.append("password", password);
-
-    //     return formUser;
-    // }
-
     const handlerLogin = (e) => {
         e.preventDefault();
-        // const form = handlerFormData();
 
         dispatch(fetchLoginRequest({email, password}))
     }

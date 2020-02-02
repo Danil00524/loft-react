@@ -14,7 +14,9 @@ import { combineReducers } from 'redux';
 const isLogin = handleActions({
     [fetchLoginSuccess]: () => true,
     [fetchLoginFailure]: () => false,
+
     [logoutAction]: () => false,
+
     [fetchRegisterFailure]: () => false,
     [fetchRegisterSuccess]: () => true,
 }, localStorage.loftTaxi ? true : false);
@@ -23,6 +25,7 @@ const isLoading = handleActions({
     [fetchRegisterRequest]: () => true,
     [fetchRegisterFailure]: () => false,
     [fetchRegisterSuccess]: () => false,
+
     [fetchLoginRequest]: () => true,
     [fetchLoginSuccess]: () => false,
     [fetchLoginFailure]: () => false,
@@ -33,6 +36,8 @@ const token = handleActions({
     [fetchLoginSuccess]: (_state, action) => action.payload.token,
     [fetchLoginFailure]: () => '',
 }, '');
+
+
 
 export default combineReducers({
     isLogin,

@@ -1,12 +1,13 @@
 import { applyMiddleware, createStore, compose } from 'redux';
-import { authMiddleware } from './modules/auth/middlewares';
-import rootReducer from './modules/index';
+import { authMiddlewares } from './modules/auth';
+import { cardMiddleware } from './modules/bankCard';
+import rootReducer from './modules';
 
 export const createAppStore = () => {
     const store = createStore(
         rootReducer,
         compose(
-            applyMiddleware(authMiddleware),
+            applyMiddleware(...authMiddlewares, ...cardMiddleware),
             // Any other middleware for example:
             // applyMiddleware(logoutMiddleware),
             window.__REDUX_DEVTOOLS_EXTENSION__

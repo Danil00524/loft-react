@@ -13,7 +13,7 @@ import './App.scss';
 
 const App = () => {
   const { isLogin, token } = useSelector(state => state.auth)
-  let history = useHistory();
+  const history = useHistory();
 
   useEffect(() => {
     if (isLogin) {

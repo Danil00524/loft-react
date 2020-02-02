@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCardRequest } from '../redux/modules/auth/actions';
 
 import '../scss/Profile.scss'
 import card from '../img/card.png'
@@ -8,35 +9,17 @@ import card from '../img/card.png'
 const Profile = () => {
     const [cardNumber, setCardNumber] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
-    const [namePerson, setNamePerson] = useState('');
+    const [cardName, setCardName] = useState('');
     const [cvc, setCvc] = useState('');
-    const isLogin = useSelector(state => state.auth.isLogin);
 
-    const handlerFormData = () => {
-        const formUser = new FormData();
-
-        formUser.append("cardNumber", cardNumber);
-        formUser.append("expiryDate", expiryDate);
-        formUser.append("cardName", namePerson);
-        formUser.append("cvc", cvc);
-
-        return formUser;
-    }
+    const { isLoadingCard, statusCard } = useSelector(state => state.bankCard);
+    const { isLogin, token } = useSelector(state => state.auth);
+    const dispatch = useDispatch();
 
     const handlerAddCard = (e) => {
         e.preventDefault();
 
-        fetch('https://loft-taxi.glitch.me/card', {
-            method: "POST",
-            headers: {
-                "Content-Type": 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(handlerFormData())
-        })
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((e) => console.error(e));
+        dispatch(fetchCardRequest({ cardNumber, expiryDate, cvc, cardName, token }));
     }
 
     const unAuthorized = <h1>Войдите в аккаунт для просмотра данной страницы.</h1>;
@@ -67,7 +50,7 @@ const Profile = () => {
                     <div className='card-back'>
                         <label>Имя владельца:
                             <input
-                                onChange={(e) => setNamePerson(e.target.value)}
+                                onChange={(e) => setCardName(e.target.value)}
                                 className='card-name'
                                 type='text'
                                 required />
@@ -81,6 +64,8 @@ const Profile = () => {
                         </label>
                     </div>
                 </div>
+                {isLoadingCard ? <div>Идет обработка запроса...</div> : null}
+                {statusCard ? <div className='wrapper-btn'>Поздравляем, ваша карта добавлена!</div> : null}
                 <div className='wrapper-btn'>
                     <button className='btn' type='submit'>Сохранить</button>
                 </div>

@@ -1,4 +1,5 @@
+import { loginMiddleware, registerMiddleware } from './middlewares';
+
 export { default } from './reducer';
-export * from './selectors';
 export * from './actions';
-export * from './middlewares';
+export const authMiddlewares = [loginMiddleware, registerMiddleware];
