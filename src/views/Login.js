@@ -29,7 +29,7 @@ const Login = ({ requestLogin }) => {
                 <div className="form">
                     <h1>Войти</h1>
                     <span>Новый пользоватей?</span>
-                    <Link to='/registration' id='linkToReg'>Зарегистрируйтесь</Link>
+                    <Link data-testid='registration' to='/registration' id='linkToReg'>Зарегистрируйтесь</Link>
                     <form onSubmit={handlerLogin}>
                         <label>Имя пользователя*
                         <input data-testid='name' onChange={(e) => setEmail(e.target.value)} required />
