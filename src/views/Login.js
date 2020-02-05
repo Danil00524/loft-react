@@ -6,7 +6,7 @@ import { fetchLoginRequest } from '../redux/modules/auth/actions'
 import '../scss/Login.scss';
 import logo from "../img/logo1.png"
 
-const Login = () => {
+const Login = ({ requestLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -15,11 +15,15 @@ const Login = () => {
     const handlerLogin = (e) => {
         e.preventDefault();
 
-        dispatch(fetchLoginRequest({email, password}))
+        if (email && password) {
+            requestLogin();
+        }
+
+        dispatch(fetchLoginRequest({ email, password }))
     }
 
     return (
-        <section className='login'>
+        <section data-testid='section-wrapper-login' className='login'>
             <div className='container login-wrapper'>
                 <img className='logo' src={logo} alt=""></img>
                 <div className="form">
@@ -28,13 +32,13 @@ const Login = () => {
                     <Link to='/registration' id='linkToReg'>Зарегистрируйтесь</Link>
                     <form onSubmit={handlerLogin}>
                         <label>Имя пользователя*
-                        <input onChange={(e) => setEmail(e.target.value)} required />
+                        <input data-testid='name' onChange={(e) => setEmail(e.target.value)} required />
                         </label>
                         <label>Пароль*
-                        <input type='password' onChange={(e) => setPassword(e.target.value)} required />
+                        <input data-testid='password' type='password' onChange={(e) => setPassword(e.target.value)} required />
                         </label>
                         <div>
-                            <input className='btn' type="submit" value='Войти' />
+                            <input data-testid='btn-submit' className='btn' type="submit" value='Войти' />
                         </div>
                     </form>
                 </div>
