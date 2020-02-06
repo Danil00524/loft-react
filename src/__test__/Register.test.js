@@ -8,7 +8,8 @@ import { render, fireEvent } from '@testing-library/react';
 
 import { createMemoryHistory } from 'history';
 
-import Login from '../views/Login';
+import Registration from '../views/Registration';
+import App from '../App';
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -16,72 +17,83 @@ const store = mockStore({
     bankCard: {},
 });
 
-describe("Login", () => {
+
+describe("Registration", () => {
     it("render component", () => {
         const history = createMemoryHistory();
         const { container, getByTestId } = render(
             <Provider store={store}>
                 <Router history={history}>
-                    <Login />
+                    <Registration />
                 </Router>
             </Provider>);
 
-        expect(getByTestId('section-wrapper-login')).toBeTruthy();
-        expect(container.innerHTML).toMatch('Войти');
+        expect(getByTestId('registration-wrapper')).toBeTruthy();
+        expect(container.innerHTML).toMatch('Зарегистрироваться');
     });
 
-    it("input value name, password", () => {
+    it("input value name, password, email and full name", () => {
         const history = createMemoryHistory();
         const { getByTestId } = render(
             <Provider store={store}>
                 <Router history={history}>
-                    <Login />
+                    <Registration />
                 </Router>
             </Provider>);
 
         const name = getByTestId('name');
         const password = getByTestId('password');
+        const email = getByTestId('email');
+        const fullName = getByTestId('fullName');
 
         fireEvent.change(name, { target: { value: "Danil" } });
-        fireEvent.change(password, { target: { value: "1" } });
+        fireEvent.change(password, { target: { value: "111222" } });
+        fireEvent.change(email, { target: { value: "dani@gmail.com" } });
+        fireEvent.change(fullName, { target: { value: "Poznyakov Danil" } });
 
         expect(name.value).toBe('Danil');
-        expect(password.value).toBe('1');
+        expect(password.value).toBe('111222');
+        expect(email.value).toBe('dani@gmail.com');
+        expect(fullName.value).toBe('Poznyakov Danil');
     });
 
-    describe('submit login user', () => {
+    describe('submit register user', () => {
         it('with empty query', () => {
-            const requestLogin = jest.fn();
+            const requestRegister = jest.fn();
             const history = createMemoryHistory();
             const { getByTestId } = render(
                 <Provider store={store}>
                     <Router history={history}>
-                        <Login requestLogin={requestLogin} />
+                        <Registration requestRegister={requestRegister} />
                     </Router>
                 </Provider>);
 
             fireEvent.submit(getByTestId('btn-submit'));
-            expect(requestLogin).not.toHaveBeenCalled();
+            expect(requestRegister).not.toHaveBeenCalled();
         });
         it('with data inside query', () => {
-            const requestLogin = jest.fn();
+            const requestRegister = jest.fn();
             const history = createMemoryHistory();
             const { getByTestId } = render(
                 <Provider store={store}>
                     <Router history={history}>
-                        <Login requestLogin={requestLogin} />
+                        <Registration requestRegister={requestRegister} />
                     </Router>
                 </Provider>);
 
             const name = getByTestId('name');
             const password = getByTestId('password');
+            const email = getByTestId('email');
+            const fullName = getByTestId('fullName');
             const btn = getByTestId('btn-submit');
 
             fireEvent.change(name, { target: { value: "dani@gmail.com" } });
-            fireEvent.change(password, { target: { value: "1" } });
+            fireEvent.change(password, { target: { value: "111222" } });
+            fireEvent.change(fullName, { target: { value: "Danil Poznyakov" } });
+            fireEvent.change(email, { target: { value: "fron@gmail.com" } });
             fireEvent.submit(btn);
 
-            expect(requestLogin).toHaveBeenCalled();
+            expect(requestRegister).toHaveBeenCalled();
         });
     });
 });

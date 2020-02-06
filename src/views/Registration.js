@@ -1,67 +1,62 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import LoginContext from '../context/Login';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRegisterRequest } from '../redux/modules/auth/actions';
+
 import logo from '../img/logo2.png'
 
-const Registration = ({ setPage }) => {
-    const { login } = useContext(LoginContext);
+const Registration = ({ requestRegister }) => {
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const isLoading = useSelector(state => state.auth.isLoading);
 
-    const goToPageMap = (e) => {
-        e.preventDefault();
-        login(true);
-
-        setPage('map');
-    }
-
-    const goToPageLog = e => {
+    const handlerRegistration = (e) => {
         e.preventDefault();
 
-        setPage('login');
+        if (name && surname && email && password) {
+            requestRegister();
+        }
+
+        dispatch(fetchRegisterRequest({ name, surname, email, password }))
     }
+
     return (
-        <section className='login'>
+        <section data-testid='registration-wrapper' className='login'>
             <div className='container login-wrapper'>
                 <img className='logo' src={logo} alt=""></img>
                 <div className="form">
                     <h1>Регистрация</h1>
                     <span>Уже зарегистрирован?</span>
-                    <a href onClick={goToPageLog}>Войти</a>
-                    <form onSubmit={goToPageMap}>
+                    <Link to='/login'>Войти</Link>
+                    <form onSubmit={handlerRegistration}>
                         <label>Адрес электронной почты
-                        <input required />
+                        <input data-testid='email' onChange={(e) => setEmail(e.target.value)} required />
                         </label>
                         <span>
                             <label className='name'>
                                 Имя
-                                <input required></input>
+                                <input data-testid='name' onChange={(e) => setName(e.target.value)} required></input>
                             </label>
                             <label className='name'>
                                 Фамилия
-                                <input required></input>
+                                <input data-testid='fullName' onChange={(e) => setSurname(e.target.value)} required></input>
                             </label>
                         </span>
                         <label>Пароль
-                        <input required />
+                        <input data-testid='password' onChange={(e) => setPassword(e.target.value)} type='password' required />
                         </label>
                         <div>
-                            <input className='btn' type="submit" value='Зарегистрироваться' />
+                            <input data-testid='btn-submit' className='btn' type="submit" value='Зарегистрироваться' />
                         </div>
+                        {isLoading ? <div>Подождите, идет загрузка...</div> : null}
                     </form>
                 </div>
-
             </div>
-
         </section>
-
     );
 }
-
-Registration.propTypes = {
-    setPage: PropTypes.func,
-}
-
-Registration.contextTypes = {
-    login: PropTypes.func,
-};
 
 export default Registration;

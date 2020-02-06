@@ -1,56 +1,50 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import LoginContext from '../context/Login';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { fetchLoginRequest } from '../redux/modules/auth/actions'
+
 import '../scss/Login.scss';
 import logo from "../img/logo1.png"
 
-const Login = ({ setPage }) => {
-    const { login } = useContext(LoginContext);
-    const goToPageMap = e => {
+const Login = ({ requestLogin }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const dispatch = useDispatch();
+
+    const handlerLogin = (e) => {
         e.preventDefault();
 
-        login(true);
-        setPage('map')
-    }
-    const goToPageReg = e => {
-        e.preventDefault();
+        if (email && password) {
+            requestLogin();
+        }
 
-        setPage('registration')
+        dispatch(fetchLoginRequest({ email, password }))
     }
 
     return (
-        <section className='login'>
+        <section data-testid='section-wrapper-login' className='login'>
             <div className='container login-wrapper'>
                 <img className='logo' src={logo} alt=""></img>
                 <div className="form">
                     <h1>Войти</h1>
                     <span>Новый пользоватей?</span>
-                    <a id='linkToReg' href='#' onClick={goToPageReg}>Зарегистрируйтесь</a>
-                    <form onSubmit={goToPageMap}>
+                    <Link data-testid='registration' to='/registration' id='linkToReg'>Зарегистрируйтесь</Link>
+                    <form onSubmit={handlerLogin}>
                         <label>Имя пользователя*
-                        <input required />
+                        <input data-testid='name' onChange={(e) => setEmail(e.target.value)} required />
                         </label>
                         <label>Пароль*
-                        <input required />
+                        <input data-testid='password' type='password' onChange={(e) => setPassword(e.target.value)} required />
                         </label>
                         <div>
-                            <input className='btn' type="submit" value='Войти' />
+                            <input data-testid='btn-submit' className='btn' type="submit" value='Войти' />
                         </div>
                     </form>
                 </div>
-
             </div>
-
         </section>
     );
 }
-
-Login.propTypes = {
-    setPage: PropTypes.func.isRequired,
-}
-
-Login.contextTypes = {
-    login: PropTypes.func.isRequired,
-};
 
 export default Login;

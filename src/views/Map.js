@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
 
 import Header from '../components/Header';
-// import LoginContext from '../context/Login';
-// const { isLoginIn } = useContext(LoginContext);
 
 import '../scss/Map.scss';
 import { mapbox } from '../constants/tokens';
 
 mapboxgl.accessToken = mapbox;
 
-const Maps = ({ setPage }) => {
+const Map = () => {
     let mapContainer = React.createRef();
 
     useEffect(() => {
@@ -25,18 +22,10 @@ const Maps = ({ setPage }) => {
 
     return (
         <section className='map'>
-            <Header setPage={setPage} />
+            <Header />
             <div id="map" ref={el => mapContainer = el}></div>
         </section>
     );
 }
 
-Maps.propTypes = {
-    setPage: PropTypes.func.isRequired,
-}
-
-Maps.contextTypes = {
-    isLoginIn: PropTypes.bool.isRequired,
-};
-
-export default Maps;
+export default Map;

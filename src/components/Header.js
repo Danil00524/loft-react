@@ -1,47 +1,38 @@
-import React, { useContext } from 'react';
-import Login from '../context/Login';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutAction } from '../redux/modules/auth/actions';
+
 import logo from '../img/logo2.png'
 
-const Header = ({ setPage }) => {
-    const { isLoginIn, login } = useContext(Login);
-
-    const goToPage = (e) => {
-        e.preventDefault();
-
-        const page = e.target.name;
-
-        setPage(page)
-    }
+const Header = () => {
+    const isLogin = useSelector(state => state.auth.isLogin);
+    const dispatch = useDispatch();
 
     const logoutUser = (e) => {
         e.preventDefault();
-        login(false)
+
+        dispatch(logoutAction());
+        localStorage.loftTaxi = '';
     }
 
-    const goIn = <button name='login' onClick={goToPage}>Войти</button>;
-    const goOut = <button name='login' onClick={logoutUser}>Выйти</button>;
+    const renderAuthLink = () => {
+        const goIn = <Link data-testid='loginId' to='/login'>Войти</Link>;
+        const goOut = <Link to='/' onClick={logoutUser}>Выйти</Link>;
+
+        return isLogin ? goOut : goIn
+    }
 
     return (
         <header className="App-header" >
-            <img src={logo} alt=""/>
+            <img data-testid='img' src={logo} alt="img" />
             <div className='header'>
-                <button name='map' onClick={goToPage}>Карта</button>
-                <button name='profile' onClick={goToPage}>Профиль</button>
-                {isLoginIn ? goOut : goIn}
+                <Link data-testid='map' to='/'>Карта</Link>
+                <Link to='/profile'>Профиль</Link>
+                {renderAuthLink()}
             </div>
         </header>
     );
 }
-
-
-Header.propTypes = {
-    setPage: PropTypes.func,
-}
-
-Header.contextTypes = {
-    isLoginIn: PropTypes.bool,
-    login: PropTypes.func,
-};
 
 export default Header;
