@@ -1,10 +1,9 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, fork } from 'redux-saga/effects'
 import {
   fetchLoginRequest, fetchLoginSuccess, fetchLoginFailure, fetchRegisterRequest,
   fetchRegisterFailure, fetchRegisterSuccess,
 } from './actions';
 
-import { fork } from 'redux-saga/effects';
 import { handlerRequest } from './api';
 
 function* fetchAuthWatcher() {

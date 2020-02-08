@@ -26,6 +26,7 @@ const statusCard = handleActions({
 }, false);
 
 const infoCard = handleActions({
+    [fetchPostCardSuccess]: (_state, action) => action.payload,
     [fetchGetCardSuccess]: (_state, action) => action.payload,
 }, {});
 

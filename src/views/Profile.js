@@ -82,6 +82,7 @@ const Profile = () => {
                         onChange={(e) => setCardNumber(e.target.value)}
                         className='card-number'
                         type='number'
+                        placeholder='0000 0000 0000 0000'
                         required />
                 </label>
                 <label>Cрок действия:
@@ -99,6 +100,7 @@ const Profile = () => {
                         onChange={(e) => setCardName(e.target.value)}
                         className='card-name'
                         type='text'
+                        placeholder="USER NAME"
                         required />
                 </label>
                 <label>CVC:
@@ -106,6 +108,7 @@ const Profile = () => {
                         onChange={(e) => setCvc(e.target.value)}
                         className='card-cvc'
                         type='number'
+                        placeholder="CVC"
                         required />
                 </label>
             </div>

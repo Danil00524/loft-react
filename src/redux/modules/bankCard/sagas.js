@@ -16,7 +16,7 @@ export function* handlerPayment(action) {
     const result = yield call(handlerRequest, 'https://loft-taxi.glitch.me/card', "POST", action.payload);
     localStorage.card = JSON.stringify(result);
 
-    yield put(fetchPostCardSuccess(result))
+    yield put(fetchPostCardSuccess(action.payload))
   } catch (e) {
     yield put(fetchPostCardFailure(e));
   }

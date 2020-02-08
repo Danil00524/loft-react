@@ -17,8 +17,13 @@ const allAddress = handleActions({
     [fetchAddressListSuccess]: (state, action) => action.payload,
 }, {});
 
+const statusRequest = handleActions({
+    [fetchAddressListSuccess]: () => true,
+}, false);
+
 
 export default combineReducers({
     loadingAddressList,
     allAddress,
+    statusRequest
 });
