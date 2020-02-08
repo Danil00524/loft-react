@@ -8,8 +8,4 @@ export const fetchRegisterRequest = createAction('FETCH_REGISTER_REQUEST');
 export const fetchRegisterSuccess = createAction('FETCH_REGISTER_SUCCESS');
 export const fetchRegisterFailure = createAction('FETCH_REGISTER_FAILURE');
 
-export const fetchCardRequest = createAction('FETCH_CARD_REQUEST');
-export const fetchCardSuccess = createAction('FETCH_CARD_SUCCESS');
-export const fetchCardFailure = createAction('FETCH_CARD_FAILURE');
-
 export const logoutAction = createAction('LOGOUT_ACTION');

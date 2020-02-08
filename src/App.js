@@ -13,14 +13,13 @@ import Preloader from './components/Preloader';
 import './App.scss';
 
 const App = () => {
-  const { isLogin, token, isLoading } = useSelector(state => state.auth);
+  const { isLogin, isLoading } = useSelector(state => state.auth);
   const { isLoadingCard } = useSelector(state => state.bankCard);
   const history = useHistory();
 
   useEffect(() => {
     if (isLogin) {
       history.push('/');
-      localStorage.loftTaxi = JSON.stringify({ token });
     }
   }, [isLogin])
 

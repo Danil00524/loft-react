@@ -1,5 +1,5 @@
-export const handlerRequest = (url, methods, actionSuccess, actionFailure, payload, store) => {
-    fetch(`${url}`, {
+export const handlerRequest = (url, methods, payload) => {
+    return fetch(url, {
         method: methods,
         headers: {
             "Content-Type": 'application/json'
@@ -7,18 +7,12 @@ export const handlerRequest = (url, methods, actionSuccess, actionFailure, paylo
         body: JSON.stringify(payload)
     })
         .then(response => {
+            const { status, statusText } = response;
+
+            if (status !== 200) {
+                throw statusText;
+            }
+
             return response.json();
         })
-        .then(data => {
-            if (data.success) {
-                if (payload.cvc) {
-                    store.dispatch(actionSuccess(payload));
-                } else {
-                    store.dispatch(actionSuccess(data));
-                }
-            } else {
-                throw data;
-            }
-        })
-        .catch((e) => store.dispatch(actionFailure(e)));
 }

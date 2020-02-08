@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCardRequest } from '../redux/modules/auth/actions';
+import { fetchPostCardRequest, fetchGetCardRequest } from '../redux/modules/bankCard/actions';
 
 import '../scss/Profile.scss'
 import card from '../img/card.png'
 
 const Profile = () => {
+    const dispatch = useDispatch();
     const [cardNumber, setCardNumber] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
     const [cardName, setCardName] = useState('');
     const [cvc, setCvc] = useState('');
 
-    const { statusCard } = useSelector(state => state.bankCard);
-    const { token } = useSelector(state => state.auth);
-    const dispatch = useDispatch();
+    const { statusCard, infoCard } = useSelector(state => state.bankCard);
+    const token = JSON.parse(localStorage.getItem('loftTaxi')).token;
+
+    if (!infoCard.id) {
+        dispatch(fetchGetCardRequest(token));
+    }
 
     const handlerAddCard = (e) => {
         e.preventDefault();
 
-        dispatch(fetchCardRequest({ cardNumber, expiryDate, cvc, cardName, token }));
+        dispatch(fetchPostCardRequest({ cardNumber, expiryDate, cvc, cardName, token }));
     }
 
     return (
@@ -38,6 +42,7 @@ const Profile = () => {
                                         onChange={(e) => setCardNumber(e.target.value)}
                                         className='card-number'
                                         type='number'
+                                        placeholder={infoCard.cardNumber}
                                         required />
                                 </label>
                                 <label>Cрок действия:
@@ -45,7 +50,7 @@ const Profile = () => {
                                         onChange={(e) => setExpiryDate(e.target.value)}
                                         className='card-date'
                                         type='number'
-                                        placeholder='00/00'
+                                        placeholder={infoCard.expiryDate}
                                         required />
                                 </label>
                             </div>
@@ -55,6 +60,7 @@ const Profile = () => {
                                         onChange={(e) => setCardName(e.target.value)}
                                         className='card-name'
                                         type='text'
+                                        placeholder={infoCard.cardName}
                                         required />
                                 </label>
                                 <label>CVC:
@@ -62,6 +68,7 @@ const Profile = () => {
                                         onChange={(e) => setCvc(e.target.value)}
                                         className='card-cvc'
                                         type='number'
+                                        placeholder={infoCard.cvc}
                                         required />
                                 </label>
                             </div>
