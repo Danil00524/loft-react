@@ -13,6 +13,7 @@ const Header = () => {
         e.preventDefault();
 
         dispatch(logoutAction());
+        localStorage.card = '';
         localStorage.loftTaxi = '';
     }
 

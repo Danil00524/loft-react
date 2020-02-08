@@ -19,6 +19,7 @@ export function* handlerLogin() {
         const { token } = result;
 
         localStorage.loftTaxi = JSON.stringify({ token });
+        localStorage.card = JSON.stringify({ success: false });
       }
 
       yield put(fetchLoginSuccess(result));
@@ -32,6 +33,12 @@ export function* handlerRegistration() {
   yield takeEvery(fetchRegisterRequest, function* (action) {
     try {
       const result = yield call(handlerRequest, 'https://loft-taxi.glitch.me/register', "POST", action.payload);
+      if (result) {
+        const { token } = result;
+
+        localStorage.loftTaxi = JSON.stringify({ token });
+        localStorage.card = JSON.stringify({ success: false });
+      }
 
       yield put(fetchRegisterSuccess(result));
     } catch (e) {
@@ -44,6 +51,7 @@ export function* handlerPayment() {
   yield takeEvery(fetchPostCardRequest, function* (action) {
     try {
       const result = yield call(handlerRequest, 'https://loft-taxi.glitch.me/card', "POST", action.payload);
+      localStorage.card = JSON.stringify(result);
 
       yield put(fetchPostCardSuccess(result))
     } catch (e) {
@@ -54,6 +62,7 @@ export function* handlerPayment() {
 
 export function* handlerGetPayment() {
   yield takeEvery(fetchGetCardRequest, function* (action) {
+
     try {
       const result = yield call(handlerGetRequest, 'https://loft-taxi.glitch.me/card', action.payload);
 

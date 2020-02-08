@@ -15,4 +15,13 @@ export const handlerRequest = (url, methods, payload) => {
 
             return response.json();
         })
+        .then(data => {
+            const { success } = data;
+
+            if (!success) {
+                throw data;
+            }
+
+            return data;
+        })
 }
