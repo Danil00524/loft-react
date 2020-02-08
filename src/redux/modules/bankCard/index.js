@@ -1,5 +1,3 @@
-// import { bankCardMiddleware } from './middlewares';
-
 export { default } from './reducer';
 export * from './actions';
-// export const cardMiddleware = [bankCardMiddleware];
+export { default as sagas } from './sagas';

@@ -1,12 +1,10 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-
-import rootReducer from './modules';
-import { handlerLogin, handlerRegistration, handlerPayment, handlerGetPayment } from './sagas';
-
-const sagaMiddleware = createSagaMiddleware();
+import rootReducer, { rootSaga } from './modules';
 
 export const createAppStore = () => {
+    const sagaMiddleware = createSagaMiddleware();
+
     const store = createStore(
         rootReducer,
         compose(
@@ -17,10 +15,7 @@ export const createAppStore = () => {
         )
     );
 
-    sagaMiddleware.run(handlerLogin);
-    sagaMiddleware.run(handlerRegistration);
-    sagaMiddleware.run(handlerPayment);
-    sagaMiddleware.run(handlerGetPayment);
+    sagaMiddleware.run(rootSaga);
 
     return store;
 }
