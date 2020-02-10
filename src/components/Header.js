@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutAction } from '../redux/modules/auth/actions';
 
@@ -28,8 +28,8 @@ const Header = () => {
         <header className="App-header" >
             <img data-testid='img' src={logo} alt="img" />
             <div className='header'>
-                <Link data-testid='map' to='/'>Карта</Link>
-                <Link to='/profile'>Профиль</Link>
+                <NavLink activeClassName='active' data-testid='map' to='/'>Карта</NavLink>
+                <NavLink activeClassName='active' data-testid='profile' to='/profile'>Профиль</NavLink>
                 {renderAuthLink()}
             </div>
         </header>

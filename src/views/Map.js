@@ -59,10 +59,6 @@ const Map = () => {
         filterAllAddress = allAddress.filter((e) => e !== addressFrom && e !== addressTo);
     };
 
-    if (statusRequest) {
-        drawRoute(mapboxgl, coordinates)
-    };
-
     const handlerCallTaxi = (e) => {
         e.preventDefault();
 
@@ -73,12 +69,16 @@ const Map = () => {
     // TODO! Сделать required поля выбора адрессов.
 
     useEffect(() => {
-        new mapboxgl.Map({
+        const map = new mapboxgl.Map({
             container: mapContainer,
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [-74.5, 40],
+            center: [30.3350986, 59.9342802],
             zoom: 9,
         });
+
+        if (coordinates.length) {
+            drawRoute(map, coordinates)
+        }
 
     }, [mapContainer]);
 
@@ -95,6 +95,8 @@ const Map = () => {
                                 id="combo-box-demo"
                                 options={filterAllAddress}
                                 onChange={(event, newValue) => {
+                                    event.preventDefault();
+
                                     setAddressFrom(newValue);
                                 }}
                                 getOptionLabel={option => option}
@@ -110,6 +112,8 @@ const Map = () => {
                                 options={filterAllAddress}
                                 getOptionLabel={option => option}
                                 onChange={(event, newValue) => {
+                                    event.preventDefault();
+
                                     setAddressTo(newValue);
                                 }}
                                 style={{ width: 300 }}
