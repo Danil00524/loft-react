@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import { mapbox } from '../constants/tokens';
 import '../scss/Map.scss';
@@ -9,10 +9,11 @@ import { fetchRouteTaxiRequest } from '../redux/modules/routeTaxi/actions';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+import Preloader from '../components/Preloader';
 import Header from '../components/Header';
 import useAddressList from '../hooks/useAddressList';
 
-const drawRoute = (map, coordinates = [222]) => {
+const drawRoute = (map, coordinates) => {
     map.flyTo({
         center: coordinates[0],
         zoom: 15
@@ -44,9 +45,11 @@ const drawRoute = (map, coordinates = [222]) => {
 };
 
 mapboxgl.accessToken = mapbox;
+
 const Map = () => {
     let mapContainer = React.createRef();
     const dispatch = useDispatch();
+    const { coordinates, statusRequest, loadingAddressList } = useSelector(state => state.routeTaxi);
     const [statusCard, allAddress] = useAddressList();
     const [addressFrom, setAddressFrom] = React.useState(null);
     const [addressTo, setAddressTo] = React.useState(null);
@@ -56,8 +59,16 @@ const Map = () => {
         filterAllAddress = allAddress.filter((e) => e !== addressFrom && e !== addressTo);
     };
 
-    const handlerCallTaxi = (addressFrom, addressTo) => {
-        dispatch(fetchRouteTaxiRequest(addressFrom, addressTo));
+    if (statusRequest) {
+        drawRoute(mapboxgl, coordinates)
+    };
+
+    const handlerCallTaxi = (e) => {
+        e.preventDefault();
+
+        if (addressFrom && addressTo) {
+            dispatch(fetchRouteTaxiRequest({ addressFrom, addressTo }));
+        }
     };
     // TODO! Сделать required поля выбора адрессов.
 
@@ -75,6 +86,7 @@ const Map = () => {
         <section className='map'>
             <Header />
             <div id="map" ref={el => mapContainer = el}></div>
+            {loadingAddressList && <Preloader />}
             {statusCard &&
                 <div className="popup-taxi">
                     <form>
@@ -107,7 +119,7 @@ const Map = () => {
                             />
                         </div>
                         <div className="btn">
-                            <button onClick={handlerCallTaxi(addressFrom, addressTo)}>Вызвать такси</button>
+                            <button onClick={handlerCallTaxi}>Вызвать такси</button>
                         </div>
                     </form>
                 </div>

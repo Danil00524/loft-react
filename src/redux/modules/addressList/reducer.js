@@ -15,7 +15,7 @@ const loadingAddressList = handleActions({
 
 const allAddress = handleActions({
     [fetchAddressListSuccess]: (state, action) => action.payload,
-}, {});
+}, []);
 
 const statusRequest = handleActions({
     [fetchAddressListSuccess]: () => true,
