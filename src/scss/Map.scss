@@ -19,8 +19,12 @@
         flex-direction: column;
         padding-bottom: 15px;
 
-        & select {
-            margin-bottom: 15px;
+        & .from {
+            margin-bottom: 30px;
+        }
+
+        & .to {
+            margin-bottom: 30px;
         }
     }
 

@@ -24,4 +24,5 @@ export const handlerRequest = (url, methods, payload) => {
 
             return data;
         })
+        .catch(e => console.error(e))
 }
