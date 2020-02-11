@@ -16,9 +16,9 @@ const Registration = ({ requestRegister }) => {
     const handlerRegistration = (e) => {
         e.preventDefault();
 
-        // if (name && surname && email && password) {
-        //     requestRegister();
-        // }
+        if (name && surname && email && password) {
+            requestRegister();
+        }
 
         dispatch(fetchRegisterRequest({ name, surname, email, password }))
     }

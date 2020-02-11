@@ -51,15 +51,10 @@ input {
         cursor: pointer;
         border: none;
     }
-    & .active {
-        background-color: #ccc;
-    }
 }
 
 a {
-    margin-right: 10px;
-    padding: 5px;
-    border-radius: 3px;
+    padding-right: 10px;
     color: black;
     text-decoration: none;
 }

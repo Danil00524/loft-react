@@ -1,33 +1,25 @@
 import {
-    fetchGetCardFailure,
-    fetchGetCardRequest,
-    fetchGetCardSuccess,
-    fetchPostCardFailure,
-    fetchPostCardRequest,
-    fetchPostCardSuccess,
+    fetchCardFailure,
+    fetchCardSuccess,
+    fetchCardRequest,
 } from './actions';
 
 import { handleActions } from 'redux-actions';
 import { combineReducers } from 'redux';
 
 const isLoadingCard = handleActions({
-    [fetchPostCardRequest]: () => true,
-    [fetchPostCardSuccess]: () => false,
-    [fetchPostCardFailure]: () => false,
-
-    [fetchGetCardRequest]: () => true,
-    [fetchGetCardFailure]: () => false,
-    [fetchGetCardSuccess]: () => false,
+    [fetchCardRequest]: () => true,
+    [fetchCardSuccess]: () => false,
+    [fetchCardFailure]: () => false,
 }, false);
 
 const statusCard = handleActions({
-    [fetchPostCardFailure]: () => false,
-    [fetchPostCardSuccess]: () => true,
+    [fetchCardFailure]: () => false,
+    [fetchCardSuccess]: () => true,
 }, false);
 
 const infoCard = handleActions({
-    [fetchPostCardSuccess]: (_state, action) => action.payload,
-    [fetchGetCardSuccess]: (_state, action) => action.payload,
+    [fetchCardSuccess]: (_state, action) => action.payload,
 }, {});
 
 export default combineReducers({

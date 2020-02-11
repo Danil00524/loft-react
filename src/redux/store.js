@@ -1,21 +1,30 @@
 import { applyMiddleware, createStore, compose } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import rootReducer, { rootSaga } from './modules';
+import { authMiddlewares } from './modules/auth';
+import { cardMiddleware } from './modules/bankCard';
+import rootReducer from './modules';
 
 export const createAppStore = () => {
-    const sagaMiddleware = createSagaMiddleware();
-
     const store = createStore(
         rootReducer,
         compose(
-            applyMiddleware(sagaMiddleware),
+            applyMiddleware(...authMiddlewares, ...cardMiddleware),
+            // Any other middleware for example:
+            // applyMiddleware(logoutMiddleware),
             window.__REDUX_DEVTOOLS_EXTENSION__
                 ? window.__REDUX_DEVTOOLS_EXTENSION__()
                 : noop => noop,
         )
     );
 
-    sagaMiddleware.run(rootSaga);
-
     return store;
 }
+
+// export default createAppStore;
+
+// state0 ->  reducers -> state1
+//              ↑
+//            middleware1
+//              ↑
+//            middleware0
+//              ↑
+// action ->  store
