@@ -13,25 +13,24 @@ import Preloader from './components/Preloader';
 import './App.scss';
 
 const App = () => {
-  const { isLogin, token, isLoading } = useSelector(state => state.auth);
+  const { isLogin, isLoading } = useSelector(state => state.auth);
   const { isLoadingCard } = useSelector(state => state.bankCard);
   const history = useHistory();
 
   useEffect(() => {
     if (isLogin) {
       history.push('/');
-      localStorage.loftTaxi = JSON.stringify({ token });
     }
   }, [isLogin])
 
-  if (isLoading || isLoadingCard) return <Preloader/>;
+  if (isLoading || isLoadingCard) return <Preloader />;
 
   return (
     <div data-testid='app' className="App">
       <Switch>
         <Route path={'/'} component={Map} exact />
-        <Route path={'/login'} component={Login} />
-        <Route path={'/registration'} component={Registration} />
+        <Route path={'/login'} component={Login} exact />
+        <Route path={'/registration'} component={Registration} exact />
         <PrivateRoute exact path={'/profile'} component={Profile} />
         <Route component={Page404} />
       </Switch>

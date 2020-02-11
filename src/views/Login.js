@@ -15,9 +15,9 @@ const Login = ({ requestLogin }) => {
     const handlerLogin = (e) => {
         e.preventDefault();
 
-        if (email && password) {
-            requestLogin();
-        }
+        // if (email && password) {
+        //     requestLogin();
+        // }
 
         dispatch(fetchLoginRequest({ email, password }))
     }
