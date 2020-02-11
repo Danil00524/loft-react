@@ -66,7 +66,6 @@ const Map = () => {
             dispatch(fetchRouteTaxiRequest({ addressFrom, addressTo }));
         }
     };
-    // TODO! Сделать required поля выбора адрессов.
 
     useEffect(() => {
         const map = new mapboxgl.Map({
@@ -76,11 +75,15 @@ const Map = () => {
             zoom: 9,
         });
 
-        if (coordinates.length) {
-            drawRoute(map, coordinates)
+        map.on('load', () => {
+            if(coordinates.length) drawRoute(map, coordinates);
+        });
+
+        return () => {
+            map.remove();
         }
 
-    }, [mapContainer]);
+    }, [mapContainer, allAddress]);
 
     return (
         <section className='map'>
