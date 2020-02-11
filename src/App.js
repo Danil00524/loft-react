@@ -28,11 +28,11 @@ const App = () => {
   return (
     <div data-testid='app' className="App">
       <Switch>
-        <Route path={'/'} component={Map} exact />
-        <Route path={'/login'} component={Login} exact />
-        <Route path={'/registration'} component={Registration} exact />
+        <Route path={'/'} render={() => <Map />} exact />
+        <Route path={'/login'} render={() => <Login />} exact />
+        <Route path={'/registration'} render={() => <Registration />} exact />
         <PrivateRoute exact path={'/profile'} component={Profile} />
-        <Route component={Page404} />
+        <Route render={() => <Page404 />} />
       </Switch>
     </div>
   );

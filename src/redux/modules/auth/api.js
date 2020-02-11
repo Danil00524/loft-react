@@ -7,12 +7,6 @@ export const handlerRequest = (url, methods, payload) => {
         body: JSON.stringify(payload)
     })
         .then(response => {
-            const { status, statusText } = response;
-
-            if (status !== 200) {
-                throw statusText;
-            }
-
             return response.json();
         })
         .then(data => {

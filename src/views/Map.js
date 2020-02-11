@@ -85,6 +85,7 @@ const Map = () => {
 
     }, [mapContainer, allAddress]);
 
+    console.log(allAddress)
     return (
         <section className='map'>
             <Header />
