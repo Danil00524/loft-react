@@ -5,6 +5,7 @@ import {
 } from './actions';
 
 import { handlerRequest } from './api';
+import { url } from '../../../constants/mainURL';
 
 function* fetchAuthWatcher() {
   yield takeEvery(fetchLoginRequest, handlerLogin);
@@ -13,7 +14,7 @@ function* fetchAuthWatcher() {
 
 export function* handlerLogin(action) {
   try {
-    const result = yield call(handlerRequest, 'https://loft-taxi.glitch.me/auth', "POST", action.payload);
+    const result = yield call(handlerRequest, `${url}auth`, "POST", action.payload);
 
     if (result) {
       const { token } = result;
@@ -30,7 +31,7 @@ export function* handlerLogin(action) {
 
 export function* handlerRegistration(action) {
   try {
-    const result = yield call(handlerRequest, 'https://loft-taxi.glitch.me/register', "POST", action.payload);
+    const result = yield call(handlerRequest, `${url}register`, "POST", action.payload);
     if (result) {
       const { token } = result;
 

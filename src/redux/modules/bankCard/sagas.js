@@ -5,6 +5,7 @@ import {
 
 import { handlerGetRequest } from './api';
 import { handlerRequest } from '../auth/api';
+import { url } from '../../../constants/mainURL';
 
 function* fetchBankCardWatcher() {
   yield takeEvery(fetchPostCardRequest, handlerPayment);
@@ -13,7 +14,7 @@ function* fetchBankCardWatcher() {
 
 export function* handlerPayment(action) {
   try {
-    const result = yield call(handlerRequest, 'https://loft-taxi.glitch.me/card', "POST", action.payload);
+    const result = yield call(handlerRequest, `${url}card`, "POST", action.payload);
     localStorage.card = JSON.stringify(result);
 
     yield put(fetchPostCardSuccess(action.payload))
@@ -24,7 +25,7 @@ export function* handlerPayment(action) {
 
 export function* handlerGetPayment(action) {
   try {
-    const result = yield call(handlerGetRequest, 'https://loft-taxi.glitch.me/card', action.payload);
+    const result = yield call(handlerGetRequest, `${url}card`, action.payload);
 
     yield put(fetchGetCardSuccess(result))
   } catch (e) {

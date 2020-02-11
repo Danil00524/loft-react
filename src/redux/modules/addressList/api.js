@@ -1,12 +1,6 @@
 export const handlerRequest = (url) => {
     return fetch(url)
         .then(response => {
-            const { status, statusText } = response;
-
-            if (status !== 200) {
-                throw statusText;
-            }
-
             return response.json();
         })
         .then(data => {
@@ -16,4 +10,5 @@ export const handlerRequest = (url) => {
 
             return data;
         })
+        .catch(e => console.error(e))
 }

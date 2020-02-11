@@ -28,8 +28,8 @@ const Header = () => {
         <header className="App-header" >
             <img data-testid='img' src={logo} alt="img" />
             <div className='header'>
-                <NavLink activeClassName='active' data-testid='map' to='/'>Карта</NavLink>
-                <NavLink activeClassName='active' data-testid='profile' to='/profile'>Профиль</NavLink>
+                <NavLink data-testid='map' exact to='/'>Карта</NavLink>
+                <NavLink data-testid='profile' exact to='/profile'>Профиль</NavLink>
                 {renderAuthLink()}
             </div>
         </header>
