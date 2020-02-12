@@ -8,17 +8,30 @@ import { render, fireEvent } from '@testing-library/react';
 
 import { createMemoryHistory } from 'history';
 
+import { act, renderHook } from '@testing-library/react-hooks';
+
+import { useAddressList } from '../hooks/useAddressList';
 import App from '../App';
-import Header from '../components/Header';
+import Header from './Header';
 
 const mockStore = configureMockStore();
 const store = mockStore({
     auth: {},
     bankCard: {},
+    routeTaxi: {},
+    allAddress: {
+        addresses: null,
+    },
+    addressList: {
+        addresses: {}
+    },
+    addresses: {},
 });
 
 
 describe("Header", () => {
+    const { statusCard, allAddress } = renderHook(useAddressList);
+    store.addressList.addresses = allAddress;
     describe("Render items", () => {
         const history = createMemoryHistory();
         const { getByTestId, getByAltText } = render(

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRegisterRequest } from '../redux/modules/auth/actions';
+import { fetchRegisterRequest } from '../../redux/modules/auth/actions';
 
-import logo from '../img/logo2.png'
+import logo from '../../img/logo2.png'
 
 const Registration = ({ requestRegister }) => {
     const [name, setName] = useState('');
@@ -16,9 +16,9 @@ const Registration = ({ requestRegister }) => {
     const handlerRegistration = (e) => {
         e.preventDefault();
 
-        // if (name && surname && email && password) {
-        //     requestRegister();
-        // }
+        if (name && surname && email && password && requestRegister) {
+            requestRegister();
+        }
 
         dispatch(fetchRegisterRequest({ name, surname, email, password }))
     }

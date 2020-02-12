@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchLoginRequest } from '../redux/modules/auth/actions'
+import { fetchLoginRequest } from '../../redux/modules/auth/actions'
 
-import '../scss/Login.scss';
-import logo from "../img/logo1.png"
+import '../../scss/Login.scss';
+import logo from "../../img/logo1.png"
 
 const Login = ({ requestLogin }) => {
     const [email, setEmail] = useState('');
@@ -15,9 +15,9 @@ const Login = ({ requestLogin }) => {
     const handlerLogin = (e) => {
         e.preventDefault();
 
-        // if (email && password) {
-        //     requestLogin();
-        // }
+        if (email && password && requestLogin) {
+            requestLogin();
+        }
 
         dispatch(fetchLoginRequest({ email, password }))
     }

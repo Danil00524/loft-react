@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
+import Header from '../../components/Header';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPostCardRequest, fetchGetCardRequest } from '../redux/modules/bankCard/actions';
+import { fetchPostCardRequest, fetchGetCardRequest } from '../../redux/modules/bankCard/actions';
 
-import '../scss/Profile.scss'
-import card from '../img/card.png'
+import '../../scss/Profile.scss'
+import card from '../../img/card.png'
 
 const Profile = () => {
     const dispatch = useDispatch();
