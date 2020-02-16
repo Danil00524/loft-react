@@ -6,7 +6,17 @@
     bottom: 0;
 }
 
-.popup-taxi {
+.with-out-card__wrapper {
+    width: 350px;
+    h1 {
+        margin-bottom: 30px;
+    }
+    div {
+        text-align: center;
+    }
+}
+
+.popup-taxi, .with-out-card__wrapper {
     position: absolute;
     background-color: #fff;
     padding: 30px;

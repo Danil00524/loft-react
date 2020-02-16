@@ -6,6 +6,19 @@ body {
     box-sizing: border-box;
 }
 
+.text-error, .text {
+    text-align: center;
+    margin: 10px 0px -20px 0px;
+    padding: 10px;
+    background-color: red;
+    color: #fff;
+    border-radius: 3px;
+}
+.text {
+    background-color: black;
+    color: #FFC617;
+}
+
 .container {
     width: 1180px;
     margin: 0 auto;
@@ -17,10 +30,6 @@ input {
     border: none;
     padding: 5px 0px;
     border-bottom: 1px solid #EAEAEA;
-
-    &:hover {
-        border-bottom: 2px solid #1473E6;
-    }
 }
 
 .btn {
