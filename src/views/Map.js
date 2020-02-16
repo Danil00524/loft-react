@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import { mapbox } from '../constants/tokens';
@@ -58,14 +58,13 @@ const Map = () => {
     if (allAddress) {
         filterAllAddress = allAddress.filter((e) => e !== addressFrom && e !== addressTo);
     };
-
-    const handlerCallTaxi = (e) => {
+    const handlerCallTaxi = useCallback((e) => {
         e.preventDefault();
 
         if (addressFrom && addressTo) {
             dispatch(fetchRouteTaxiRequest({ addressFrom, addressTo }));
         }
-    };
+    }, [addressFrom, addressTo])
 
     useEffect(() => {
         const map = new mapboxgl.Map({
@@ -76,7 +75,7 @@ const Map = () => {
         });
 
         map.on('load', () => {
-            if(coordinates.length) drawRoute(map, coordinates);
+            if (coordinates.length) drawRoute(map, coordinates);
         });
 
         return () => {
@@ -85,7 +84,6 @@ const Map = () => {
 
     }, [mapContainer, allAddress]);
 
-    console.log(allAddress)
     return (
         <section className='map'>
             <Header />
