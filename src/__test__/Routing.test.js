@@ -5,15 +5,25 @@ import { Router } from 'react-router-dom';
 import "@testing-library/jest-dom/extend-expect";
 import configureMockStore from "redux-mock-store";
 import { render, fireEvent } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react-hooks';
 
 import { createMemoryHistory } from 'history';
 
+import { useAddressList } from '../hooks/useAddressList';
 import App from '../App';
+import Header from '../components/Header';
 
 const mockStore = configureMockStore();
 const store = mockStore({
     auth: {},
     bankCard: {},
+    routeTaxi: {},
+    addressList: {
+        addresses: {}
+    },
+    allAddress: {
+        addresses
+    },
 });
 
 
@@ -24,7 +34,7 @@ describe("full app routing", () => {
             const { container, getByText, getByTestId } = render(
                 <Provider store={store}>
                     <Router history={history}>
-                        <App />
+                        <Header />
                     </Router>
                 </Provider>
             );
@@ -35,6 +45,7 @@ describe("full app routing", () => {
 
         it('route map-login', () => {
             const history = createMemoryHistory();
+            const [statusCard, addresses] = renderHook(useAddressList);
             const { container, getByText, getByTestId } = render(
                 <Provider store={store}>
                     <Router history={history}>
@@ -54,7 +65,7 @@ describe("full app routing", () => {
             const { container, getByText, getByTestId } = render(
                 <Provider store={store}>
                     <Router history={history}>
-                        <App />
+                        <Header />
                     </Router>
                 </Provider>
             );

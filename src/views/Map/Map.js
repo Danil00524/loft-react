@@ -1,17 +1,17 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
-import { mapbox } from '../constants/tokens';
-import '../scss/Map.scss';
+import { mapbox } from '../../constants/tokens';
+import '../../scss/Map.scss';
 
-import { fetchRouteTaxiRequest } from '../redux/modules/routeTaxi/actions';
+import { fetchRouteTaxiRequest } from '../../redux/modules/routeTaxi/actions';
 
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import Preloader from '../components/Preloader';
-import Header from '../components/Header';
-import useAddressList from '../hooks/useAddressList';
+import Preloader from '../../components/Preloader';
+import Header from '../../components/Header';
+import useAddressList from '../../hooks/useAddressList';
 
 const drawRoute = (map, coordinates) => {
     map.flyTo({

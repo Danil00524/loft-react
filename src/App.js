@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import Profile from './views/Profile';
-import Map from './views/Map';
-import Login from './views/Login';
-import Registration from './views/Registration';
-import Page404 from './views/Page404';
+import Profile from './views/Profile/Profile';
+import Map from './views/Map/Map';
+import Login from './views/Login/Login';
+import Registration from './views/Registration/Registration';
+import Page404 from './views/Page404/Page404';
 import PrivateRoute from "./HOCs/PrivateRoute";
 import Preloader from './components/Preloader';
 

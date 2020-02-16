@@ -3,13 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-// import { object } from 'yup';
-import { fetchLoginRequest } from '../redux/modules/auth/actions'
+import { fetchLoginRequest } from '../../redux/modules/auth/actions'
 
-import '../scss/Login.scss';
-import logo from "../img/logo1.png"
+import '../../scss/Login.scss';
+import logo from "../../img/logo1.png"
 
-// let yup = require('yup');
 const LoginSchema = yup.object().shape({
     login: yup.string().required().email(),
     password: yup.string().required().min(8),
