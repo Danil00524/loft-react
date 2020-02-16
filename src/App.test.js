@@ -7,6 +7,8 @@ import "@testing-library/jest-dom/extend-expect";
 
 import App from './App';
 import Preloader from './components/Preloader';
+import { useAddressList } from './hooks/useAddressList';
+import { act, renderHook } from '@testing-library/react-hooks';
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -17,10 +19,17 @@ const store = mockStore({
   },
   bankCard: {
     isLoadingCard: false,
-  }
+  },
+  addressList: {
+    addresses: {},
+  },
+  routeTaxi: {},
+  addresses: {},
 });
 
 describe("App", () => {
+  const { statusCard, allAddress } = renderHook(useAddressList);
+
   const { getByTestId } = render(
     <Provider store={store}>
       <Router>
