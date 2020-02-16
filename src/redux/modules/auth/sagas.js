@@ -16,11 +16,13 @@ export function* handlerLogin(action) {
   try {
     const result = yield call(handlerRequest, `${url}auth`, "POST", action.payload);
 
-    if (result) {
+    if (result.success) {
       const { token } = result;
 
       localStorage.loftTaxi = JSON.stringify({ token });
       localStorage.card = JSON.stringify({ success: false });
+    } else {
+      throw result;
     }
 
     yield put(fetchLoginSuccess(result));
@@ -32,11 +34,13 @@ export function* handlerLogin(action) {
 export function* handlerRegistration(action) {
   try {
     const result = yield call(handlerRequest, `${url}register`, "POST", action.payload);
-    if (result) {
+    if (result.success) {
       const { token } = result;
 
       localStorage.loftTaxi = JSON.stringify({ token });
       localStorage.card = JSON.stringify({ success: false });
+    } else {
+      throw result;
     }
 
     yield put(fetchRegisterSuccess(result));
