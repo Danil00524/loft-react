@@ -44,6 +44,7 @@ const drawRoute = (map, coordinates) => {
     });
 };
 
+
 const Map = () => {
     let mapContainer = React.createRef();
     const dispatch = useDispatch();
@@ -63,6 +64,11 @@ const Map = () => {
     // useCallback возвращает прошлое знание.
     const handlerCallTaxi = useCallback((e) => {
         e.preventDefault();
+
+        if (map && map.getLayer('route')) {
+            map.removeLayer('route');
+            map.removeSource('route');
+        }
 
         if (!addressFrom || !addressTo) {
             setStatusAddresses(false);
@@ -91,12 +97,9 @@ const Map = () => {
         if (map && coordinates.length) {
             drawRoute(map, coordinates);
 
-
             // Выполнит её только тогда, когда наступит время сбросить эффект.
             // Что бы не происходила "утечка памяти". Аналогично componentWillUnmount.
-            // return () => {
-            //     map.remove();
-            // }
+            // return () => {}
         }
     }, [map, allAddress, coordinates]);
 
