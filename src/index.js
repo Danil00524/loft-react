@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns"
+import { theme } from "loft-taxi-mui-theme";
+
 import { createAppStore } from './redux/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -10,11 +15,15 @@ import { BrowserRouter as Router } from 'react-router-dom';
 let store = createAppStore();
 
 ReactDOM.render(
-    <Provider store={store}>
-        <Router>
-            <App />
-        </Router>
-    </Provider>,
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <MuiThemeProvider theme={theme}>
+            <Provider store={store}>
+                <Router>
+                    <App />
+                </Router>
+            </Provider>
+        </MuiThemeProvider>
+    </MuiPickersUtilsProvider>,
     document.getElementById('root')
 );
 

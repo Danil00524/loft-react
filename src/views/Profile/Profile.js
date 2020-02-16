@@ -1,123 +1,44 @@
 import React, { useState } from 'react';
 import Header from '../../components/Header';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPostCardRequest, fetchGetCardRequest } from '../../redux/modules/bankCard/actions';
+import { fetchPostCardRequest } from '../../redux/modules/bankCard/actions';
+import { numberValidator, CardSchema, cardNameValidator, cvcValidator } from '../../helpers/validationsSchems';
+import { useForm, Controller } from 'react-hook-form';
+
+import TextField from '@material-ui/core/TextField';
+import { DatePicker } from "@material-ui/pickers";
 
 import '../../scss/Profile.scss'
 import card from '../../img/card.png'
 
 const Profile = () => {
     const dispatch = useDispatch();
-    const [cardNumber, setCardNumber] = useState('');
-    const [expiryDate, setExpiryDate] = useState('');
-    const [cardName, setCardName] = useState('');
-    const [cvc, setCvc] = useState('');
+    const { register, handleSubmit, errors, control, getValues } = useForm({
+        mode: 'onChange',
+        validationSchema: CardSchema,
+    });
 
-    const { statusCard, infoCard } = useSelector(state => state.bankCard);
-    const token = JSON.parse(localStorage.getItem('loftTaxi')).token;
-    const statusAddedCard = JSON.parse(localStorage.card);
+    const { statusCard } = useSelector(state => state.bankCard);
 
-    if (!infoCard.id && statusAddedCard.success) {
-        dispatch(fetchGetCardRequest(token));
+    // Раньше можно было получить было GET запросом данные о карте. Сейчас постоянно false возвращает.
+    // Можно конечно на LocalStorage переписать логику,но времени на это нету.
+    // Лишние удалил.
+
+    const handlerAddCard = (data) => {
+        dispatch(fetchPostCardRequest(data));
     }
 
-    const handlerAddCard = (e) => {
-        e.preventDefault();
+    const handleCardNumberInput = ({ target }) => {
+        target.value = numberValidator(target.value);
+    };
 
-        dispatch(fetchPostCardRequest({ cardNumber, expiryDate, cvc, cardName, token }));
+    const handleNameInput = ({ target }) => {
+        target.value = cardNameValidator(target.value);
     }
 
-    const userWithCard = <form onSubmit={handlerAddCard}>
-        <div className='profile-inner'>
-            <div className='card-title'>
-                <img src={card} alt=""></img>
-                <label>Номер карты:
-        <input
-                        onChange={(e) => setCardNumber(e.target.value)}
-                        className='card-number'
-                        type='number'
-                        placeholder={infoCard.cardNumber}
-                        required />
-                </label>
-                <label>Cрок действия:
-        <input
-                        onChange={(e) => setExpiryDate(e.target.value)}
-                        className='card-date'
-                        type='number'
-                        placeholder={infoCard.expiryDate}
-                        required />
-                </label>
-            </div>
-            <div className='card-back'>
-                <label>Имя владельца:
-        <input
-                        onChange={(e) => setCardName(e.target.value)}
-                        className='card-name'
-                        type='text'
-                        placeholder={infoCard.cardName}
-                        required />
-                </label>
-                <label>CVC:
-        <input
-                        onChange={(e) => setCvc(e.target.value)}
-                        className='card-cvc'
-                        type='number'
-                        placeholder={infoCard.cvc}
-                        required />
-                </label>
-            </div>
-        </div>
-        {statusCard ? <div className='wrapper-btn'>Поздравляем, ваша карта добавлена!</div> : null}
-        <div className='wrapper-btn'>
-            <button className='btn' type='submit'>Сохранить</button>
-        </div>
-    </form>;
-
-    const userWithOutCard = <form onSubmit={handlerAddCard}>
-        <div className='profile-inner'>
-            <div className='card-title'>
-                <img src={card} alt=""></img>
-                <label>Номер карты:
-        <input
-                        onChange={(e) => setCardNumber(e.target.value)}
-                        className='card-number'
-                        type='number'
-                        placeholder='0000 0000 0000 0000'
-                        required />
-                </label>
-                <label>Cрок действия:
-        <input
-                        onChange={(e) => setExpiryDate(e.target.value)}
-                        className='card-date'
-                        type='number'
-                        placeholder='00/00'
-                        required />
-                </label>
-            </div>
-            <div className='card-back'>
-                <label>Имя владельца:
-        <input
-                        onChange={(e) => setCardName(e.target.value)}
-                        className='card-name'
-                        type='text'
-                        placeholder="USER NAME"
-                        required />
-                </label>
-                <label>CVC:
-        <input
-                        onChange={(e) => setCvc(e.target.value)}
-                        className='card-cvc'
-                        type='number'
-                        placeholder="CVC"
-                        required />
-                </label>
-            </div>
-        </div>
-        {statusCard ? <div className='wrapper-btn'>Поздравляем, ваша карта добавлена!</div> : null}
-        <div className='wrapper-btn'>
-            <button className='btn' type='submit'>Сохранить</button>
-        </div>
-    </form>;
+    const handleCvcInput = ({ target }) => {
+        target.value = cvcValidator(target.value);
+    }
 
     return (
         <section>
@@ -126,7 +47,66 @@ const Profile = () => {
                 <div className='profile-wrapper'>
                     <h1>Профиль</h1>
                     <h4>Способ оплаты</h4>
-                    {infoCard.id ? userWithCard : userWithOutCard}
+                    <form onSubmit={handleSubmit(handlerAddCard)}>
+                        <div className='profile-inner'>
+                            <div className='card-title'>
+                                <img src={card} alt=""></img>
+                                <label>Номер карты:
+                                <TextField
+                                        type="text"
+                                        placeholder="0000 0000 0000 0000"
+                                        name="cardNumber"
+                                        helperText={errors.cardNumber && errors.cardNumber.message}
+                                        inputRef={register()}
+                                        onInput={handleCardNumberInput}
+                                        error={!!errors.cardNumber}
+                                    />
+                                </label>
+                                <label>Cрок действия:
+                                <Controller as={DatePicker}
+                                        className='card-date'
+                                        name='expiryDate'
+                                        views={["year", "month"]}
+                                        control={control}
+                                        inputRef={register({ required: true })}
+                                        error={!!errors.expiryDate}
+                                        helperText={errors.expiryDate && errors.expiryDate.message}
+                                        format={"MM/yy"}
+                                        required />
+                                </label>
+                            </div>
+                            <div className='card-back'>
+                                <label>Имя владельца:
+                                <TextField
+                                        type="text"
+                                        placeholder="USER NAME"
+                                        className='card-name'
+                                        name='cardName'
+                                        helperText={errors.cardName && errors.cardName.message}
+                                        inputRef={register()}
+                                        onInput={handleNameInput}
+                                        error={!!errors.cardName}
+                                    />
+                                </label>
+                                <label>CVC:
+                                <TextField
+                                        type="text"
+                                        placeholder="000"
+                                        className='card-cvc'
+                                        name='cvc'
+                                        helperText={errors.cvc && errors.cvc.message}
+                                        inputRef={register()}
+                                        onInput={handleCvcInput}
+                                        error={!!errors.cvc}
+                                    />
+                                </label>
+                            </div>
+                        </div>
+                        {statusCard ? <div className='wrapper-btn'>Поздравляем, ваша карта добавлена!</div> : null}
+                        <div className='wrapper-btn'>
+                            <button className='btn' type='submit'>Сохранить</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>

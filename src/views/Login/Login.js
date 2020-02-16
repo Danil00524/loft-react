@@ -2,26 +2,22 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { fetchLoginRequest } from '../../redux/modules/auth/actions'
+import { LoginSchema } from '../../helpers/validationsSchems';
 
 import '../../scss/Login.scss';
 import logo from "../../img/logo1.png"
 
-const LoginSchema = yup.object().shape({
-    login: yup.string().required('Заполните поле.').email('Введите корректный email.'),
-    password: yup.string().required('Заполните поле.').min(8, 'Пароль должен состоять минимум из 8 символов.'),
-});
-
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const { errorMessage } = useSelector(state => state.auth);
+    const dispatch = useDispatch();
+
     const { register, handleSubmit, errors, getValues } = useForm({
         validationSchema: LoginSchema
     });
-
-    const dispatch = useDispatch();
 
     const handlerLogin = () => {
         dispatch(fetchLoginRequest({ email, password }))

@@ -3,28 +3,24 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRegisterRequest } from '../../redux/modules/auth/actions';
 
-import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
+import { RegisterSchema } from '../../helpers/validationsSchems';
 
 import logo from '../../img/logo2.png'
 
-const RegisterSchema = yup.object().shape({
-    email: yup.string().required('Поле должно быть заполнено.').email('Введите корректный email.'),
-    name: yup.string().required('Поле должно быть заполнено.'),
-    surname: yup.string().required('Поле должно быть заполнено.'),
-    password: yup.string().required('Поле должно быть заполнено.').min(8, 'Пароль должен состоять из 8-ми символов.')
-});
 
 const Registration = () => {
     const { register, handleSubmit, getValues, errors } = useForm({
         validationSchema: RegisterSchema,
     });
+
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const dispatch = useDispatch();
-    const isLoading = useSelector(state => state.auth.isLoading);
+    const { errorMessage } = useSelector(state => state.auth);
 
     const handlerRegistration = () => {
         dispatch(fetchRegisterRequest({ name, surname, email, password }))
@@ -39,10 +35,16 @@ const Registration = () => {
                     <span>Уже зарегистрирован?</span>
                     <Link to='/login'>Войти</Link>
                     <form onSubmit={handleSubmit(handlerRegistration)}>
-                        <label>Адрес электронной почты
-                        <input data-testid='email' name='email' ref={register} onChange={(e) => setEmail(e.target.value)} />
+                        <label>
+                            Адрес электронной почты
+                        <input
+                                data-testid='email'
+                                name='email'
+                                ref={register}
+                                onChange={(e) => setEmail(e.target.value)} />
                             {errors.email && <p>{errors.email.message}</p>}
                         </label>
+
                         <span>
                             <label className='name'>
                                 Имя
@@ -64,6 +66,7 @@ const Registration = () => {
                                 {errors.surname && <p>{errors.surname.message}</p>}
                             </label>
                         </span>
+
                         <label>
                             Пароль
                         <input
@@ -74,6 +77,7 @@ const Registration = () => {
                                 ref={register} />
                             {errors.password && <p>{errors.password.message}</p>}
                         </label>
+                        {errorMessage && <p>{errorMessage}</p>}
                         <div>
                             <input data-testid='btn-submit' className='btn' type="submit" value='Зарегистрироваться' />
                         </div>
