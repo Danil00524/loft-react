@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { fetchLoginRequest } from '../../redux/modules/auth/actions'
+import { LoginSchema } from '../../helpers/validationsSchems';
 
 import '../../scss/Login.scss';
 import logo from "../../img/logo1.png"
 
-const Login = ({ requestLogin }) => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const { errorMessage } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
-    const handlerLogin = (e) => {
-        e.preventDefault();
+    const { register, handleSubmit, errors, getValues } = useForm({
+        validationSchema: LoginSchema
+    });
 
-        if (email && password && requestLogin) {
-            requestLogin();
-        }
-
+    const handlerLogin = () => {
         dispatch(fetchLoginRequest({ email, password }))
     }
 
@@ -30,13 +31,22 @@ const Login = ({ requestLogin }) => {
                     <h1>Войти</h1>
                     <span>Новый пользоватей?</span>
                     <Link data-testid='registration' to='/registration' id='linkToReg'>Зарегистрируйтесь</Link>
-                    <form onSubmit={handlerLogin}>
+                    <form onSubmit={handleSubmit(handlerLogin)}>
                         <label>Имя пользователя*
-                        <input data-testid='name' onChange={(e) => setEmail(e.target.value)} required />
+                        <input
+                                data-testid='name'
+                                type='text'
+                                name='login'
+                                ref={register}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            {errors.login && <p>{errors.login.message}</p>}
                         </label>
                         <label>Пароль*
-                        <input data-testid='password' type='password' onChange={(e) => setPassword(e.target.value)} required />
+                        <input data-testid='password' type='password' name='password' ref={register} onChange={(e) => setPassword(e.target.value)} />
+                            {errors.password && <p>{errors.password.message}</p>}
                         </label>
+                        {errorMessage && <div>{errorMessage}</div>}
                         <div>
                             <input data-testid='btn-submit' className='btn' type="submit" value='Войти' />
                         </div>

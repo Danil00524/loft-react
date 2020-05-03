@@ -21,6 +21,9 @@ const store = mockStore({
     addressList: {
         addresses: {}
     },
+    allAddress: {
+        addresses
+    },
 });
 
 

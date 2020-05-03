@@ -6,17 +6,7 @@ export const handlerRequest = (url, methods, payload) => {
         },
         body: JSON.stringify(payload)
     })
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            const { success } = data;
-
-            if (!success) {
-                throw data;
-            }
-
-            return data;
-        })
+        .then(response => response.json())
+        .then(data => data)
         .catch(e => console.error(e))
 }

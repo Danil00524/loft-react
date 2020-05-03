@@ -6,12 +6,17 @@ const coordinates = handleActions({
     [fetchRouteTaxiSuccess]: (state, action) => action.payload,
 }, []);
 
-const isLoading = handleActions({
+const isLoadingRoute = handleActions({
     [fetchRouteTaxiFailure]: () => false,
     [fetchRouteTaxiRequest]: () => true,
     [fetchRouteTaxiSuccess]: () => false,
 }, false);
 
+const statusRequest = handleActions({
+    [fetchRouteTaxiSuccess]: () => true,
+    [fetchRouteTaxiRequest]: () => false,
+}, false);
+
 export default combineReducers({
-    coordinates, isLoading
+    coordinates, isLoadingRoute, statusRequest
 });

@@ -37,12 +37,18 @@ const token = handleActions({
     [fetchLoginFailure]: () => '',
 }, '');
 
+const errorMessage = handleActions({
+    [fetchLoginFailure]: (state, action) => action.payload.error,
+    [fetchRegisterFailure]: (state, action) => action.payload.error,
+}, '');
+
 
 
 export default combineReducers({
     isLogin,
     token,
     isLoading,
+    errorMessage,
 });
 
 // const initialState = {
